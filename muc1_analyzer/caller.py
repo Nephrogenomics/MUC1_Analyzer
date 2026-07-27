@@ -1298,7 +1298,8 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
                      length_warning: str = None, arbiter: dict = None, rs4072037: dict = None,
                      dupc: dict = None, congruence: dict = None, clinical_call: str = None,
                      onset_index: float = None, variant_repeat: int = None,
-                     variant_label: str = None, carrier_contig: str = None) -> None:
+                     variant_label: str = None, carrier_contig: str = None,
+                     score: dict = None, rs_alert: str = None) -> None:
     """
     Generates a PDF report with, for each haplotype:
       - The contig name
@@ -1372,6 +1373,14 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
         textColor=colors.HexColor('#555555'),
         spaceAfter=2,
     )
+    style_section = ParagraphStyle(
+        'section',
+        fontName='Helvetica-Bold',
+        fontSize=13,
+        textColor=colors.HexColor(COLOR_HEADER),
+        spaceBefore=6,
+        spaceAfter=6,
+    )
 
     # ── Document construction ──────────────────────────────────────────
     doc = SimpleDocTemplate(
@@ -1385,7 +1394,9 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
     story = []
 
     # Title
-    title_text = f"VNTR Report — {sample}" if sample else "VNTR Report"
+    import re as _re
+    _disp_sample = _re.sub(r'[-_]+vntrcigarlength$', '', sample or '').rstrip('-_ ')
+    title_text = f"VNTR Report — {_disp_sample}" if _disp_sample else "VNTR Report"
     story.append(Paragraph(title_text, style_title))
     story.append(HRFlowable(width='100%', thickness=1.5,
                              color=COLOR_RULE, spaceAfter=10))
@@ -1478,6 +1489,7 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
         story.append(Paragraph("⚠ LENGTH UNRELIABLE — " + length_warning, warn_style))
 
     # ── One block per haplotype ─────────────────────────────────────────────
+    story.append(Paragraph("Haplotypes", style_section))
     for h in results:
         block = []
 
@@ -1517,21 +1529,46 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
         story.append(HRFlowable(width='100%', thickness=0.5,
                                   color=colors.HexColor('#cccccc'), spaceAfter=4))
 
-    # ── Final molecular-result line ───────────────────────────────
-    parts_mol = []
-    for h in results:
-        n = h['n_motifs']
-        indel_str = _indel_summary(h['motifs'])
-        if indel_str:
-            parts_mol.append(f"{n} motifs ({indel_str})")
+    # ── Final molecular-result line — only when there is NO clinical-call box above (else the same
+    #     genotype would appear twice, in two blue boxes; the top box is the one the reader came for) ──
+    if not clinical_call:
+        parts_mol = []
+        for h in results:
+            n = h['n_motifs']
+            indel_str = _indel_summary(h['motifs'])
+            parts_mol.append(f"{n} motifs ({indel_str})" if indel_str else f"{n} motifs")
+        story.append(Spacer(1, 0.3 * cm))
+        story.append(Paragraph(" | ".join(parts_mol), style_result))
+
+    # ── MUC1 Score — the onset / severity detail table (shown when the caller forwards its score) ────
+    if score:
+        from reportlab.platypus import Table, TableStyle
+        story.append(Spacer(1, 0.15 * cm))
+        story.append(HRFlowable(width='100%', thickness=0.5, color=colors.HexColor('#cccccc'), spaceAfter=6))
+        story.append(Paragraph("MUC1 Score", style_section))
+        _sev = score.get("severity_score")
+        if rs4072037 and rs4072037.get("genotype"):
+            _src = rs4072037.get("note") or f"rs4072037-{rs4072037.get('genotype')}"
         else:
-            parts_mol.append(f"{n} motifs")
+            _src = "provided"
+        if _sev is not None:
+            _sev_txt = (f"{_sev:+g} (rs4072037-{score.get('splice_base')} → "
+                        f"{'severe' if _sev > 0 else 'protective'}; {_src})")
+        else:
+            _sev_txt = "n/a — rs4072037 undetermined (no usable read and no --rs4072037)"
+        _rows = [["MUC1_Score — ONSET axis",
+                  f"{score.get('onset_score')}  (onset_index {score.get('onset_index')})"],
+                 ["MUC1_Score — SEVERITY axis", _sev_txt],
+                 ["VNTR ratio (mut/healthy)", f"{score.get('ratio')}"]]
+        _st = Table(_rows, colWidths=[6 * cm, 11 * cm])
+        _st.setStyle(TableStyle([("FONT", (0, 0), (-1, -1), "Helvetica", 9.5),
+                                 ("FONT", (0, 0), (0, -1), "Helvetica-Bold", 9.5),
+                                 ("LINEBELOW", (0, 0), (-1, -2), 0.4, colors.HexColor("#DDDDDD")),
+                                 ("TOPPADDING", (0, 0), (-1, -1), 4), ("BOTTOMPADDING", (0, 0), (-1, -1), 4)]))
+        story.append(_st)
+        story.append(Spacer(1, 0.3 * cm))
 
-    mol_line = " | ".join(parts_mol)
-    story.append(Spacer(1, 0.3 * cm))
-    story.append(Paragraph(mol_line, style_result))
-
-    # ── Two-axis clinical summary (optional) ────────────────────────────
+    # ── Two-axis clinical summary (optional; the genomic pipeline's own prognosis block) ─────────────
     if two_axis is not None:
         from . import two_axis_report as TA
         story.extend(TA.render_pdf_blocks(two_axis, {"result": style_result, "meta": style_meta}))
@@ -1549,6 +1586,20 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
                 story.append(_plot)
         except Exception as e:
             print(f"[WARN] cohort plot skipped: {e}", file=sys.stderr)
+
+    # ── Genotype → phenotype flag, under the cohort curve (driven by the severity axis) ──────────────
+    if score:
+        _sev = score.get("severity_score")
+        _geno = ParagraphStyle('geno', fontName='Helvetica-Bold', fontSize=13, spaceBefore=6, leading=17)
+        if _sev is not None and _sev > 0:
+            story.append(Paragraph('<font color="#C00000"><b>GENOTYPE ASSOCIATED WITH A SEVERE PHENOTYPE</b></font>', _geno))
+        elif _sev is not None and _sev < 0:
+            story.append(Paragraph('<font color="#1B7A2F"><b>GENOTYPE ASSOCIATED WITH A PROTECTIVE PHENOTYPE</b></font>', _geno))
+        else:
+            story.append(Paragraph('<font color="#888888"><b>SEVERITY UNDETERMINED — rs4072037 NOT DETERMINED</b></font>', _geno))
+        if rs_alert:
+            story.append(Spacer(1, 0.1 * cm))
+            story.append(Paragraph(f'<font color="#B8860B"><b>&#9888; {rs_alert}</b></font>', style_meta))
 
     doc.build(story)
 

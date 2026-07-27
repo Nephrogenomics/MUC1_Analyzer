@@ -758,15 +758,15 @@ def _cohort_plot(onset_index, mean_oi, std_oi, z):
         pts += [X(oi), Y(G(oi))]
     d.add(PolyLine(pts, strokeColor=colors.HexColor("#185FA5"), strokeWidth=1.8))
     d.add(Line(lx, by, rx, by, strokeColor=colors.HexColor("#888"), strokeWidth=1))
-    for oi, lab in [(0.0, "0"), (mean_oi, "moy. cohorte"), (1.0, "1")]:
+    for oi, lab in [(0.0, "0"), (mean_oi, "cohort mean"), (1.0, "1")]:
         x = X(oi)
         d.add(Line(x, by, x, by - 4, strokeColor=colors.HexColor("#888")))
         d.add(String(x, by - 14, lab, fontName="Helvetica", fontSize=7,
                      fillColor=colors.HexColor("#666"), textAnchor="middle"))
     # direction of effect: onset_index↑ (right) = earlier frameshift → more neoprotein → earlier onset
-    d.add(String(lx, by - 26, "\u25c4 onset tardif", fontName="Helvetica-Oblique", fontSize=7,
+    d.add(String(lx, by - 26, "\u25c4 later onset", fontName="Helvetica-Oblique", fontSize=7,
                  fillColor=colors.HexColor("#888"), textAnchor="start"))
-    d.add(String(rx, by - 26, "onset pr\u00e9coce \u25ba", fontName="Helvetica-Oblique", fontSize=7,
+    d.add(String(rx, by - 26, "earlier onset \u25ba", fontName="Helvetica-Oblique", fontSize=7,
                  fillColor=colors.HexColor("#888"), textAnchor="end"))
     xm = X(mean_oi)
     d.add(Line(xm, by, xm, Y(G(mean_oi)), strokeColor=colors.HexColor("#9BB6D6"),
@@ -823,7 +823,8 @@ def write_merged_pdf(path, sample, frag, score, haps, rel_dupc=None, rs_detected
                              clinical_call=clinical_string(frag, haps),
                              onset_index=score.get("onset_index"),
                              variant_repeat=var.get("repeat"), variant_label=var.get("label"),
-                             carrier_contig=carrier_contig)
+                             carrier_contig=carrier_contig,
+                             score=score, rs_alert=rs_alert)
             if rs_alert:
                 print(f"[cigar-len] {rs_alert}", file=sys.stderr)
             return path
