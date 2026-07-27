@@ -1,0 +1,16 @@
+name: muc1
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.10
+  - pysam>=0.21
+  - mappy>=2.24
+  - samtools>=1.17
+  - minimap2>=2.24
+  - numpy>=1.24
+  - pandas>=2.0
+  - scipy>=1.10
+  - openpyxl>=3.1
+  - reportlab>=3.6        # optional: muc1_analyzer call --pdf report
+  - pytest>=7.0

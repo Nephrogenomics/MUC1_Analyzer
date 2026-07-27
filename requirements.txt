@@ -1,0 +1,9 @@
+# MUC1_Analyzer — Python dependencies (public two-axis build).
+# External tools required on PATH: samtools, minimap2  (see environment.yml for a pinned conda env).
+pysam>=0.21
+mappy>=2.24
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+openpyxl>=3.1        # haplotype_score cohort table (xlsx)
+reportlab>=3.6       # optional: muc1_analyzer call --pdf report
