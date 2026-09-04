@@ -1,0 +1,4898 @@
+{
+  "n_profiles": 71,
+  "contexts": {
+    "7-7-7": {
+      "n_patients": 71,
+      "n_ctracts": 28840,
+      "pooled_7C": 27717,
+      "pooled_8C": 285,
+      "counts": {
+        "1": 2,
+        "2": 1,
+        "3": 1,
+        "4": 11,
+        "5": 109,
+        "6": 700,
+        "7": 27717,
+        "8": 285,
+        "9": 6,
+        "10": 5,
+        "12": 1,
+        "13": 2
+      },
+      "f_8C_pooled": 0.0099,
+      "f_8C_mean": 0.0098,
+      "f_8C_sd": 0.0053,
+      "f_8C_max": 0.0227,
+      "difficulty": 0.0389
+    },
+    "A-B": {
+      "n_patients": 71,
+      "n_ctracts": 8113,
+      "pooled_7C": 7418,
+      "pooled_8C": 132,
+      "counts": {
+        "2": 1,
+        "3": 1,
+        "4": 22,
+        "5": 125,
+        "6": 402,
+        "7": 7418,
+        "8": 132,
+        "9": 9,
+        "10": 2,
+        "12": 1
+      },
+      "f_8C_pooled": 0.0163,
+      "f_8C_mean": 0.016,
+      "f_8C_sd": 0.0149,
+      "f_8C_max": 0.0574,
+      "difficulty": 0.0857
+    },
+    "B-X": {
+      "n_patients": 71,
+      "n_ctracts": 7352,
+      "pooled_7C": 6779,
+      "pooled_8C": 119,
+      "counts": {
+        "1": 1,
+        "2": 1,
+        "3": 3,
+        "4": 4,
+        "5": 85,
+        "6": 349,
+        "7": 6779,
+        "8": 119,
+        "9": 4,
+        "10": 6,
+        "11": 1
+      },
+      "f_8C_pooled": 0.0162,
+      "f_8C_mean": 0.0165,
+      "f_8C_sd": 0.0178,
+      "f_8C_max": 0.0887,
+      "difficulty": 0.0779
+    },
+    "7-A": {
+      "n_patients": 71,
+      "n_ctracts": 7046,
+      "pooled_7C": 6497,
+      "pooled_8C": 96,
+      "counts": {
+        "3": 1,
+        "4": 3,
+        "5": 132,
+        "6": 314,
+        "7": 6497,
+        "8": 96,
+        "9": 1,
+        "10": 1,
+        "11": 1
+      },
+      "f_8C_pooled": 0.0136,
+      "f_8C_mean": 0.0148,
+      "f_8C_sd": 0.0139,
+      "f_8C_max": 0.069,
+      "difficulty": 0.0779
+    },
+    "X-X": {
+      "n_patients": 71,
+      "n_ctracts": 4717,
+      "pooled_7C": 3354,
+      "pooled_8C": 164,
+      "counts": {
+        "2": 2,
+        "3": 6,
+        "4": 48,
+        "5": 395,
+        "6": 730,
+        "7": 3354,
+        "8": 164,
+        "9": 14,
+        "10": 3,
+        "11": 1
+      },
+      "f_8C_pooled": 0.0348,
+      "f_8C_mean": 0.0331,
+      "f_8C_sd": 0.0231,
+      "f_8C_max": 0.1042,
+      "difficulty": 0.289
+    },
+    "7-7": {
+      "n_patients": 71,
+      "n_ctracts": 3312,
+      "pooled_7C": 2836,
+      "pooled_8C": 82,
+      "counts": {
+        "1": 1,
+        "3": 3,
+        "4": 13,
+        "5": 57,
+        "6": 309,
+        "7": 2836,
+        "8": 82,
+        "9": 9,
+        "10": 1,
+        "13": 1
+      },
+      "f_8C_pooled": 0.0248,
+      "f_8C_mean": 0.024,
+      "f_8C_sd": 0.0321,
+      "f_8C_max": 0.1765,
+      "difficulty": 0.1437
+    },
+    "aS-7-7": {
+      "n_patients": 71,
+      "n_ctracts": 3269,
+      "pooled_7C": 3138,
+      "pooled_8C": 33,
+      "counts": {
+        "4": 8,
+        "5": 28,
+        "6": 61,
+        "7": 3138,
+        "8": 33,
+        "10": 1
+      },
+      "f_8C_pooled": 0.0101,
+      "f_8C_mean": 0.0096,
+      "f_8C_sd": 0.0139,
+      "f_8C_max": 0.0556,
+      "difficulty": 0.0401
+    },
+    "aO-aS-7": {
+      "n_patients": 70,
+      "n_ctracts": 2852,
+      "pooled_7C": 2724,
+      "pooled_8C": 31,
+      "counts": {
+        "2": 1,
+        "4": 3,
+        "5": 13,
+        "6": 77,
+        "7": 2724,
+        "8": 31,
+        "9": 2,
+        "10": 1
+      },
+      "f_8C_pooled": 0.0109,
+      "f_8C_mean": 0.0121,
+      "f_8C_sd": 0.0175,
+      "f_8C_max": 0.08,
+      "difficulty": 0.0449
+    },
+    "7-aO-aS": {
+      "n_patients": 70,
+      "n_ctracts": 2779,
+      "pooled_7C": 2584,
+      "pooled_8C": 34,
+      "counts": {
+        "3": 1,
+        "4": 2,
+        "5": 17,
+        "6": 140,
+        "7": 2584,
+        "8": 34,
+        "11": 1
+      },
+      "f_8C_pooled": 0.0122,
+      "f_8C_mean": 0.0112,
+      "f_8C_sd": 0.0179,
+      "f_8C_max": 0.0625,
+      "difficulty": 0.0702
+    },
+    "?": {
+      "n_patients": 71,
+      "n_ctracts": 2086,
+      "pooled_7C": 1179,
+      "pooled_8C": 65,
+      "counts": {
+        "1": 2,
+        "2": 1,
+        "3": 15,
+        "4": 79,
+        "5": 327,
+        "6": 404,
+        "7": 1179,
+        "8": 65,
+        "9": 12,
+        "10": 1,
+        "11": 1
+      },
+      "f_8C_pooled": 0.0312,
+      "f_8C_mean": 0.0279,
+      "f_8C_sd": 0.04,
+      "f_8C_max": 0.2,
+      "difficulty": 0.4348
+    },
+    "7-X": {
+      "n_patients": 71,
+      "n_ctracts": 2009,
+      "pooled_7C": 1571,
+      "pooled_8C": 67,
+      "counts": {
+        "1": 1,
+        "2": 1,
+        "4": 14,
+        "5": 81,
+        "6": 268,
+        "7": 1571,
+        "8": 67,
+        "9": 2,
+        "10": 3,
+        "13": 1
+      },
+      "f_8C_pooled": 0.0333,
+      "f_8C_mean": 0.0314,
+      "f_8C_sd": 0.0401,
+      "f_8C_max": 0.1429,
+      "difficulty": 0.218
+    },
+    "3-4": {
+      "n_patients": 71,
+      "n_ctracts": 1862,
+      "pooled_7C": 1672,
+      "pooled_8C": 34,
+      "counts": {
+        "2": 2,
+        "4": 3,
+        "5": 26,
+        "6": 121,
+        "7": 1672,
+        "8": 34,
+        "9": 2,
+        "10": 1,
+        "11": 1
+      },
+      "f_8C_pooled": 0.0183,
+      "f_8C_mean": 0.0193,
+      "f_8C_sd": 0.0261,
+      "f_8C_max": 0.1154,
+      "difficulty": 0.102
+    },
+    "7-aS-7": {
+      "n_patients": 71,
+      "n_ctracts": 1653,
+      "pooled_7C": 1569,
+      "pooled_8C": 19,
+      "counts": {
+        "4": 1,
+        "5": 9,
+        "6": 52,
+        "7": 1569,
+        "8": 19,
+        "9": 2,
+        "11": 1
+      },
+      "f_8C_pooled": 0.0115,
+      "f_8C_mean": 0.0121,
+      "f_8C_sd": 0.0263,
+      "f_8C_max": 0.1053,
+      "difficulty": 0.0508
+    },
+    "A-A": {
+      "n_patients": 71,
+      "n_ctracts": 1641,
+      "pooled_7C": 1329,
+      "pooled_8C": 38,
+      "counts": {
+        "1": 2,
+        "3": 2,
+        "4": 7,
+        "5": 107,
+        "6": 150,
+        "7": 1329,
+        "8": 38,
+        "9": 5,
+        "15": 1
+      },
+      "f_8C_pooled": 0.0232,
+      "f_8C_mean": 0.0246,
+      "f_8C_sd": 0.0637,
+      "f_8C_max": 0.5,
+      "difficulty": 0.1901
+    },
+    "5-C": {
+      "n_patients": 71,
+      "n_ctracts": 1621,
+      "pooled_7C": 1532,
+      "pooled_8C": 13,
+      "counts": {
+        "3": 1,
+        "5": 12,
+        "6": 59,
+        "7": 1532,
+        "8": 13,
+        "9": 2,
+        "10": 1,
+        "11": 1
+      },
+      "f_8C_pooled": 0.008,
+      "f_8C_mean": 0.0112,
+      "f_8C_sd": 0.0326,
+      "f_8C_max": 0.1667,
+      "difficulty": 0.0549
+    },
+    "X-X-6+": {
+      "n_patients": 65,
+      "n_ctracts": 1307,
+      "pooled_7C": 1189,
+      "pooled_8C": 18,
+      "counts": {
+        "3": 1,
+        "4": 2,
+        "5": 27,
+        "6": 67,
+        "7": 1189,
+        "8": 18,
+        "9": 1,
+        "10": 1,
+        "13": 1
+      },
+      "f_8C_pooled": 0.0138,
+      "f_8C_mean": 0.0114,
+      "f_8C_sd": 0.0239,
+      "f_8C_max": 0.087,
+      "difficulty": 0.0903
+    },
+    "X": {
+      "n_patients": 69,
+      "n_ctracts": 1181,
+      "pooled_7C": 598,
+      "pooled_8C": 59,
+      "counts": {
+        "1": 2,
+        "3": 6,
+        "4": 35,
+        "5": 218,
+        "6": 259,
+        "7": 598,
+        "8": 59,
+        "9": 3,
+        "11": 1
+      },
+      "f_8C_pooled": 0.05,
+      "f_8C_mean": 0.0554,
+      "f_8C_sd": 0.0705,
+      "f_8C_max": 0.25,
+      "difficulty": 0.4936
+    },
+    "7-B": {
+      "n_patients": 64,
+      "n_ctracts": 1014,
+      "pooled_7C": 911,
+      "pooled_8C": 20,
+      "counts": {
+        "5": 10,
+        "6": 70,
+        "7": 911,
+        "8": 20,
+        "9": 2,
+        "10": 1
+      },
+      "f_8C_pooled": 0.0197,
+      "f_8C_mean": 0.0257,
+      "f_8C_sd": 0.0544,
+      "f_8C_max": 0.25,
+      "difficulty": 0.1016
+    },
+    "7": {
+      "n_patients": 71,
+      "n_ctracts": 942,
+      "pooled_7C": 758,
+      "pooled_8C": 29,
+      "counts": {
+        "4": 5,
+        "5": 36,
+        "6": 110,
+        "7": 758,
+        "8": 29,
+        "9": 1,
+        "11": 1,
+        "12": 1,
+        "13": 1
+      },
+      "f_8C_pooled": 0.0308,
+      "f_8C_mean": 0.0288,
+      "f_8C_sd": 0.0559,
+      "f_8C_max": 0.3333,
+      "difficulty": 0.1953
+    },
+    "aO-7-7": {
+      "n_patients": 56,
+      "n_ctracts": 841,
+      "pooled_7C": 819,
+      "pooled_8C": 5,
+      "counts": {
+        "3": 1,
+        "5": 2,
+        "6": 13,
+        "7": 819,
+        "8": 5,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0059,
+      "f_8C_mean": 0.0207,
+      "f_8C_sd": 0.1326,
+      "f_8C_max": 1.0,
+      "difficulty": 0.0262
+    },
+    "A-X": {
+      "n_patients": 46,
+      "n_ctracts": 815,
+      "pooled_7C": 733,
+      "pooled_8C": 19,
+      "counts": {
+        "4": 2,
+        "5": 15,
+        "6": 44,
+        "7": 733,
+        "8": 19,
+        "9": 1,
+        "14": 1
+      },
+      "f_8C_pooled": 0.0233,
+      "f_8C_mean": 0.0277,
+      "f_8C_sd": 0.0751,
+      "f_8C_max": 0.5,
+      "difficulty": 0.1006
+    },
+    "X-X-6": {
+      "n_patients": 40,
+      "n_ctracts": 593,
+      "pooled_7C": 550,
+      "pooled_8C": 4,
+      "counts": {
+        "5": 8,
+        "6": 31,
+        "7": 550,
+        "8": 4
+      },
+      "f_8C_pooled": 0.0067,
+      "f_8C_mean": 0.0059,
+      "f_8C_sd": 0.0205,
+      "f_8C_max": 0.1111,
+      "difficulty": 0.0725
+    },
+    "7-7-aO": {
+      "n_patients": 54,
+      "n_ctracts": 547,
+      "pooled_7C": 449,
+      "pooled_8C": 6,
+      "counts": {
+        "4": 1,
+        "5": 22,
+        "6": 67,
+        "7": 449,
+        "8": 6,
+        "10": 1,
+        "11": 1
+      },
+      "f_8C_pooled": 0.011,
+      "f_8C_mean": 0.0054,
+      "f_8C_sd": 0.0184,
+      "f_8C_max": 0.1,
+      "difficulty": 0.1792
+    },
+    "E-X": {
+      "n_patients": 69,
+      "n_ctracts": 499,
+      "pooled_7C": 369,
+      "pooled_8C": 11,
+      "counts": {
+        "1": 1,
+        "4": 5,
+        "5": 40,
+        "6": 71,
+        "7": 369,
+        "8": 11,
+        "10": 2
+      },
+      "f_8C_pooled": 0.022,
+      "f_8C_mean": 0.0171,
+      "f_8C_sd": 0.0474,
+      "f_8C_max": 0.25,
+      "difficulty": 0.2605
+    },
+    "A": {
+      "n_patients": 68,
+      "n_ctracts": 483,
+      "pooled_7C": 313,
+      "pooled_8C": 16,
+      "counts": {
+        "3": 2,
+        "4": 11,
+        "5": 51,
+        "6": 88,
+        "7": 313,
+        "8": 16,
+        "9": 2
+      },
+      "f_8C_pooled": 0.0331,
+      "f_8C_mean": 0.0263,
+      "f_8C_sd": 0.0629,
+      "f_8C_max": 0.3333,
+      "difficulty": 0.352
+    },
+    "aO-X": {
+      "n_patients": 70,
+      "n_ctracts": 422,
+      "pooled_7C": 320,
+      "pooled_8C": 13,
+      "counts": {
+        "4": 6,
+        "5": 31,
+        "6": 50,
+        "7": 320,
+        "8": 13,
+        "9": 2
+      },
+      "f_8C_pooled": 0.0308,
+      "f_8C_mean": 0.0272,
+      "f_8C_sd": 0.0747,
+      "f_8C_max": 0.4,
+      "difficulty": 0.2417
+    },
+    "B": {
+      "n_patients": 67,
+      "n_ctracts": 407,
+      "pooled_7C": 267,
+      "pooled_8C": 13,
+      "counts": {
+        "2": 1,
+        "3": 1,
+        "4": 7,
+        "5": 58,
+        "6": 56,
+        "7": 267,
+        "8": 13,
+        "9": 3,
+        "12": 1
+      },
+      "f_8C_pooled": 0.0319,
+      "f_8C_mean": 0.0195,
+      "f_8C_sd": 0.0568,
+      "f_8C_max": 0.2727,
+      "difficulty": 0.344
+    },
+    "7-aO": {
+      "n_patients": 67,
+      "n_ctracts": 404,
+      "pooled_7C": 357,
+      "pooled_8C": 5,
+      "counts": {
+        "3": 1,
+        "4": 1,
+        "5": 11,
+        "6": 29,
+        "7": 357,
+        "8": 5
+      },
+      "f_8C_pooled": 0.0124,
+      "f_8C_mean": 0.0129,
+      "f_8C_sd": 0.0491,
+      "f_8C_max": 0.25,
+      "difficulty": 0.1163
+    },
+    "B-B": {
+      "n_patients": 51,
+      "n_ctracts": 349,
+      "pooled_7C": 311,
+      "pooled_8C": 3,
+      "counts": {
+        "4": 1,
+        "5": 5,
+        "6": 29,
+        "7": 311,
+        "8": 3
+      },
+      "f_8C_pooled": 0.0086,
+      "f_8C_mean": 0.0212,
+      "f_8C_sd": 0.0886,
+      "f_8C_max": 0.5,
+      "difficulty": 0.1089
+    },
+    "aS-X": {
+      "n_patients": 69,
+      "n_ctracts": 311,
+      "pooled_7C": 212,
+      "pooled_8C": 8,
+      "counts": {
+        "4": 2,
+        "5": 27,
+        "6": 61,
+        "7": 212,
+        "8": 8,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0257,
+      "f_8C_mean": 0.0239,
+      "f_8C_sd": 0.0815,
+      "f_8C_max": 0.5,
+      "difficulty": 0.3183
+    },
+    "aO-aS": {
+      "n_patients": 68,
+      "n_ctracts": 307,
+      "pooled_7C": 223,
+      "pooled_8C": 11,
+      "counts": {
+        "4": 3,
+        "5": 13,
+        "6": 57,
+        "7": 223,
+        "8": 11
+      },
+      "f_8C_pooled": 0.0358,
+      "f_8C_mean": 0.0365,
+      "f_8C_sd": 0.1074,
+      "f_8C_max": 0.5,
+      "difficulty": 0.2736
+    },
+    "5-X": {
+      "n_patients": 68,
+      "n_ctracts": 306,
+      "pooled_7C": 231,
+      "pooled_8C": 12,
+      "counts": {
+        "2": 1,
+        "4": 2,
+        "5": 10,
+        "6": 48,
+        "7": 231,
+        "8": 12,
+        "9": 1,
+        "10": 1
+      },
+      "f_8C_pooled": 0.0392,
+      "f_8C_mean": 0.0417,
+      "f_8C_sd": 0.1371,
+      "f_8C_max": 1.0,
+      "difficulty": 0.2451
+    },
+    "aS-7": {
+      "n_patients": 65,
+      "n_ctracts": 299,
+      "pooled_7C": 227,
+      "pooled_8C": 11,
+      "counts": {
+        "1": 1,
+        "4": 1,
+        "5": 15,
+        "6": 44,
+        "7": 227,
+        "8": 11
+      },
+      "f_8C_pooled": 0.0368,
+      "f_8C_mean": 0.0252,
+      "f_8C_sd": 0.061,
+      "f_8C_max": 0.25,
+      "difficulty": 0.2408
+    },
+    "7-aS": {
+      "n_patients": 67,
+      "n_ctracts": 225,
+      "pooled_7C": 170,
+      "pooled_8C": 6,
+      "counts": {
+        "5": 12,
+        "6": 37,
+        "7": 170,
+        "8": 6
+      },
+      "f_8C_pooled": 0.0267,
+      "f_8C_mean": 0.015,
+      "f_8C_sd": 0.0504,
+      "f_8C_max": 0.25,
+      "difficulty": 0.2444
+    },
+    "4": {
+      "n_patients": 64,
+      "n_ctracts": 214,
+      "pooled_7C": 170,
+      "pooled_8C": 3,
+      "counts": {
+        "2": 1,
+        "5": 11,
+        "6": 28,
+        "7": 170,
+        "8": 3,
+        "10": 1
+      },
+      "f_8C_pooled": 0.014,
+      "f_8C_mean": 0.0148,
+      "f_8C_sd": 0.0727,
+      "f_8C_max": 0.5,
+      "difficulty": 0.2056
+    },
+    "X-7": {
+      "n_patients": 53,
+      "n_ctracts": 183,
+      "pooled_7C": 159,
+      "pooled_8C": 7,
+      "counts": {
+        "5": 4,
+        "6": 11,
+        "7": 159,
+        "8": 7,
+        "9": 2
+      },
+      "f_8C_pooled": 0.0383,
+      "f_8C_mean": 0.0192,
+      "f_8C_sd": 0.0671,
+      "f_8C_max": 0.4,
+      "difficulty": 0.1311
+    },
+    "G-A": {
+      "n_patients": 53,
+      "n_ctracts": 164,
+      "pooled_7C": 114,
+      "pooled_8C": 3,
+      "counts": {
+        "4": 1,
+        "5": 17,
+        "6": 28,
+        "7": 114,
+        "8": 3,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0183,
+      "f_8C_mean": 0.0148,
+      "f_8C_sd": 0.0617,
+      "f_8C_max": 0.3333,
+      "difficulty": 0.3049
+    },
+    "3": {
+      "n_patients": 61,
+      "n_ctracts": 164,
+      "pooled_7C": 121,
+      "pooled_8C": 4,
+      "counts": {
+        "4": 4,
+        "5": 10,
+        "6": 25,
+        "7": 121,
+        "8": 4
+      },
+      "f_8C_pooled": 0.0244,
+      "f_8C_mean": 0.0123,
+      "f_8C_sd": 0.0541,
+      "f_8C_max": 0.25,
+      "difficulty": 0.2622
+    },
+    "5-aJ": {
+      "n_patients": 9,
+      "n_ctracts": 131,
+      "pooled_7C": 121,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "6": 9,
+        "7": 121
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0763
+    },
+    "aS": {
+      "n_patients": 51,
+      "n_ctracts": 117,
+      "pooled_7C": 78,
+      "pooled_8C": 4,
+      "counts": {
+        "1": 2,
+        "4": 4,
+        "5": 6,
+        "6": 22,
+        "7": 78,
+        "8": 4,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0342,
+      "f_8C_mean": 0.0163,
+      "f_8C_sd": 0.0757,
+      "f_8C_max": 0.5,
+      "difficulty": 0.3333
+    },
+    "X-A": {
+      "n_patients": 40,
+      "n_ctracts": 110,
+      "pooled_7C": 75,
+      "pooled_8C": 5,
+      "counts": {
+        "3": 1,
+        "4": 3,
+        "5": 10,
+        "6": 15,
+        "7": 75,
+        "8": 5,
+        "10": 1
+      },
+      "f_8C_pooled": 0.0455,
+      "f_8C_mean": 0.0375,
+      "f_8C_sd": 0.1086,
+      "f_8C_max": 0.5,
+      "difficulty": 0.3182
+    },
+    "aO-B": {
+      "n_patients": 12,
+      "n_ctracts": 110,
+      "pooled_7C": 102,
+      "pooled_8C": 1,
+      "counts": {
+        "5": 2,
+        "6": 5,
+        "7": 102,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0091,
+      "f_8C_mean": 0.0036,
+      "f_8C_sd": 0.012,
+      "f_8C_max": 0.0435,
+      "difficulty": 0.0727
+    },
+    "aO": {
+      "n_patients": 50,
+      "n_ctracts": 109,
+      "pooled_7C": 74,
+      "pooled_8C": 4,
+      "counts": {
+        "4": 1,
+        "5": 14,
+        "6": 16,
+        "7": 74,
+        "8": 4
+      },
+      "f_8C_pooled": 0.0367,
+      "f_8C_mean": 0.0173,
+      "f_8C_sd": 0.0778,
+      "f_8C_max": 0.5,
+      "difficulty": 0.3211
+    },
+    "7-aO-aO": {
+      "n_patients": 12,
+      "n_ctracts": 105,
+      "pooled_7C": 100,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 5,
+        "7": 100
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0476
+    },
+    "aO-7": {
+      "n_patients": 41,
+      "n_ctracts": 102,
+      "pooled_7C": 82,
+      "pooled_8C": 7,
+      "counts": {
+        "5": 2,
+        "6": 11,
+        "7": 82,
+        "8": 7
+      },
+      "f_8C_pooled": 0.0686,
+      "f_8C_mean": 0.0881,
+      "f_8C_sd": 0.2378,
+      "f_8C_max": 1.0,
+      "difficulty": 0.1961
+    },
+    "7-aO-7": {
+      "n_patients": 23,
+      "n_ctracts": 101,
+      "pooled_7C": 97,
+      "pooled_8C": 2,
+      "counts": {
+        "5": 1,
+        "6": 1,
+        "7": 97,
+        "8": 2
+      },
+      "f_8C_pooled": 0.0198,
+      "f_8C_mean": 0.0236,
+      "f_8C_sd": 0.1019,
+      "f_8C_max": 0.5,
+      "difficulty": 0.0396
+    },
+    "X-B": {
+      "n_patients": 36,
+      "n_ctracts": 98,
+      "pooled_7C": 71,
+      "pooled_8C": 5,
+      "counts": {
+        "1": 1,
+        "5": 4,
+        "6": 17,
+        "7": 71,
+        "8": 5
+      },
+      "f_8C_pooled": 0.051,
+      "f_8C_mean": 0.0226,
+      "f_8C_sd": 0.0761,
+      "f_8C_max": 0.3333,
+      "difficulty": 0.2755
+    },
+    "aO-aO-7": {
+      "n_patients": 9,
+      "n_ctracts": 98,
+      "pooled_7C": 96,
+      "pooled_8C": 1,
+      "counts": {
+        "6": 1,
+        "7": 96,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0102,
+      "f_8C_mean": 0.0222,
+      "f_8C_sd": 0.0629,
+      "f_8C_max": 0.2,
+      "difficulty": 0.0204
+    },
+    "aO-A": {
+      "n_patients": 14,
+      "n_ctracts": 97,
+      "pooled_7C": 92,
+      "pooled_8C": 1,
+      "counts": {
+        "6": 4,
+        "7": 92,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0103,
+      "f_8C_mean": 0.0079,
+      "f_8C_sd": 0.0286,
+      "f_8C_max": 0.1111,
+      "difficulty": 0.0515
+    },
+    "B-7": {
+      "n_patients": 46,
+      "n_ctracts": 79,
+      "pooled_7C": 68,
+      "pooled_8C": 5,
+      "counts": {
+        "5": 2,
+        "6": 4,
+        "7": 68,
+        "8": 5
+      },
+      "f_8C_pooled": 0.0633,
+      "f_8C_mean": 0.0236,
+      "f_8C_sd": 0.093,
+      "f_8C_max": 0.5,
+      "difficulty": 0.1392
+    },
+    "A-7": {
+      "n_patients": 41,
+      "n_ctracts": 77,
+      "pooled_7C": 70,
+      "pooled_8C": 2,
+      "counts": {
+        "5": 1,
+        "6": 4,
+        "7": 70,
+        "8": 2
+      },
+      "f_8C_pooled": 0.026,
+      "f_8C_mean": 0.0203,
+      "f_8C_sd": 0.0916,
+      "f_8C_max": 0.5,
+      "difficulty": 0.0909
+    },
+    "D-E": {
+      "n_patients": 32,
+      "n_ctracts": 75,
+      "pooled_7C": 29,
+      "pooled_8C": 2,
+      "counts": {
+        "4": 2,
+        "5": 15,
+        "6": 26,
+        "7": 29,
+        "8": 2,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0267,
+      "f_8C_mean": 0.0234,
+      "f_8C_sd": 0.096,
+      "f_8C_max": 0.5,
+      "difficulty": 0.6133
+    },
+    "X-C": {
+      "n_patients": 36,
+      "n_ctracts": 64,
+      "pooled_7C": 18,
+      "pooled_8C": 2,
+      "counts": {
+        "2": 1,
+        "5": 14,
+        "6": 29,
+        "7": 18,
+        "8": 2
+      },
+      "f_8C_pooled": 0.0312,
+      "f_8C_mean": 0.0417,
+      "f_8C_sd": 0.1816,
+      "f_8C_max": 1.0,
+      "difficulty": 0.7188
+    },
+    "X-G": {
+      "n_patients": 26,
+      "n_ctracts": 55,
+      "pooled_7C": 30,
+      "pooled_8C": 2,
+      "counts": {
+        "1": 1,
+        "5": 15,
+        "6": 7,
+        "7": 30,
+        "8": 2
+      },
+      "f_8C_pooled": 0.0364,
+      "f_8C_mean": 0.0577,
+      "f_8C_sd": 0.2115,
+      "f_8C_max": 1.0,
+      "difficulty": 0.4545
+    },
+    "X-X-bD": {
+      "n_patients": 10,
+      "n_ctracts": 52,
+      "pooled_7C": 49,
+      "pooled_8C": 1,
+      "counts": {
+        "6": 2,
+        "7": 49,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0192,
+      "f_8C_mean": 0.01,
+      "f_8C_sd": 0.03,
+      "f_8C_max": 0.1,
+      "difficulty": 0.0577
+    },
+    "X-V-6+": {
+      "n_patients": 30,
+      "n_ctracts": 51,
+      "pooled_7C": 43,
+      "pooled_8C": 2,
+      "counts": {
+        "6": 6,
+        "7": 43,
+        "8": 2
+      },
+      "f_8C_pooled": 0.0392,
+      "f_8C_mean": 0.0222,
+      "f_8C_sd": 0.0831,
+      "f_8C_max": 0.3333,
+      "difficulty": 0.1569
+    },
+    "G": {
+      "n_patients": 37,
+      "n_ctracts": 46,
+      "pooled_7C": 19,
+      "pooled_8C": 2,
+      "counts": {
+        "1": 1,
+        "3": 1,
+        "4": 2,
+        "5": 14,
+        "6": 6,
+        "7": 19,
+        "8": 2,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0435,
+      "f_8C_mean": 0.0315,
+      "f_8C_sd": 0.1637,
+      "f_8C_max": 1.0,
+      "difficulty": 0.587
+    },
+    "5-aS": {
+      "n_patients": 26,
+      "n_ctracts": 42,
+      "pooled_7C": 31,
+      "pooled_8C": 1,
+      "counts": {
+        "5": 2,
+        "6": 8,
+        "7": 31,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0238,
+      "f_8C_mean": 0.0096,
+      "f_8C_sd": 0.0481,
+      "f_8C_max": 0.25,
+      "difficulty": 0.2619
+    },
+    "E": {
+      "n_patients": 29,
+      "n_ctracts": 41,
+      "pooled_7C": 8,
+      "pooled_8C": 1,
+      "counts": {
+        "4": 6,
+        "5": 12,
+        "6": 13,
+        "7": 8,
+        "8": 1,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0244,
+      "f_8C_mean": 0.0172,
+      "f_8C_sd": 0.0912,
+      "f_8C_max": 0.5,
+      "difficulty": 0.8049
+    },
+    "X-V-6": {
+      "n_patients": 24,
+      "n_ctracts": 36,
+      "pooled_7C": 24,
+      "pooled_8C": 4,
+      "counts": {
+        "5": 3,
+        "6": 4,
+        "7": 24,
+        "8": 4,
+        "10": 1
+      },
+      "f_8C_pooled": 0.1111,
+      "f_8C_mean": 0.0972,
+      "f_8C_sd": 0.2402,
+      "f_8C_max": 1.0,
+      "difficulty": 0.3333
+    },
+    "7-7-aS": {
+      "n_patients": 9,
+      "n_ctracts": 35,
+      "pooled_7C": 30,
+      "pooled_8C": 1,
+      "counts": {
+        "2": 1,
+        "6": 3,
+        "7": 30,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0286,
+      "f_8C_mean": 0.0085,
+      "f_8C_sd": 0.0242,
+      "f_8C_max": 0.0769,
+      "difficulty": 0.1429
+    },
+    "X-T": {
+      "n_patients": 15,
+      "n_ctracts": 34,
+      "pooled_7C": 25,
+      "pooled_8C": 2,
+      "counts": {
+        "5": 2,
+        "6": 4,
+        "7": 25,
+        "8": 2,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0588,
+      "f_8C_mean": 0.0889,
+      "f_8C_sd": 0.2572,
+      "f_8C_max": 1.0,
+      "difficulty": 0.2647
+    },
+    "aS-aS-7": {
+      "n_patients": 9,
+      "n_ctracts": 34,
+      "pooled_7C": 33,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 33,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0294,
+      "f_8C_mean": 0.0058,
+      "f_8C_sd": 0.0165,
+      "f_8C_max": 0.0526,
+      "difficulty": 0.0294
+    },
+    "4-5": {
+      "n_patients": 29,
+      "n_ctracts": 33,
+      "pooled_7C": 13,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 20,
+        "7": 13
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.6061
+    },
+    "5": {
+      "n_patients": 22,
+      "n_ctracts": 32,
+      "pooled_7C": 16,
+      "pooled_8C": 1,
+      "counts": {
+        "3": 1,
+        "4": 2,
+        "5": 3,
+        "6": 9,
+        "7": 16,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0312,
+      "f_8C_mean": 0.0455,
+      "f_8C_sd": 0.2083,
+      "f_8C_max": 1.0,
+      "difficulty": 0.5
+    },
+    "G-X": {
+      "n_patients": 20,
+      "n_ctracts": 31,
+      "pooled_7C": 19,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "5": 6,
+        "6": 3,
+        "7": 19,
+        "9": 1,
+        "10": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.3871
+    },
+    "C-X": {
+      "n_patients": 22,
+      "n_ctracts": 30,
+      "pooled_7C": 14,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "5": 5,
+        "6": 9,
+        "7": 14,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5333
+    },
+    "C": {
+      "n_patients": 18,
+      "n_ctracts": 29,
+      "pooled_7C": 7,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 7,
+        "6": 15,
+        "7": 7
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.7586
+    },
+    "3-4+": {
+      "n_patients": 2,
+      "n_ctracts": 27,
+      "pooled_7C": 25,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 2,
+        "7": 25
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0741
+    },
+    "aO-aO-aO": {
+      "n_patients": 3,
+      "n_ctracts": 27,
+      "pooled_7C": 26,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 26
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.037
+    },
+    "X-aO": {
+      "n_patients": 19,
+      "n_ctracts": 26,
+      "pooled_7C": 17,
+      "pooled_8C": 1,
+      "counts": {
+        "5": 4,
+        "6": 4,
+        "7": 17,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0385,
+      "f_8C_mean": 0.0263,
+      "f_8C_sd": 0.1116,
+      "f_8C_max": 0.5,
+      "difficulty": 0.3462
+    },
+    "aS-T": {
+      "n_patients": 14,
+      "n_ctracts": 26,
+      "pooled_7C": 20,
+      "pooled_8C": 1,
+      "counts": {
+        "5": 2,
+        "6": 3,
+        "7": 20,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0385,
+      "f_8C_mean": 0.0357,
+      "f_8C_sd": 0.1288,
+      "f_8C_max": 0.5,
+      "difficulty": 0.2308
+    },
+    "7-G": {
+      "n_patients": 16,
+      "n_ctracts": 26,
+      "pooled_7C": 22,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 3,
+        "6": 1,
+        "7": 22
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.1538
+    },
+    "aO-aS-aS": {
+      "n_patients": 3,
+      "n_ctracts": 26,
+      "pooled_7C": 25,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 25,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0385,
+      "f_8C_mean": 0.0185,
+      "f_8C_sd": 0.0262,
+      "f_8C_max": 0.0556,
+      "difficulty": 0.0385
+    },
+    "X-6+": {
+      "n_patients": 19,
+      "n_ctracts": 22,
+      "pooled_7C": 15,
+      "pooled_8C": 2,
+      "counts": {
+        "4": 1,
+        "5": 3,
+        "6": 1,
+        "7": 15,
+        "8": 2
+      },
+      "f_8C_pooled": 0.0909,
+      "f_8C_mean": 0.0789,
+      "f_8C_sd": 0.244,
+      "f_8C_max": 1.0,
+      "difficulty": 0.3182
+    },
+    "D-X": {
+      "n_patients": 15,
+      "n_ctracts": 21,
+      "pooled_7C": 14,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "5": 3,
+        "6": 3,
+        "7": 14
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.3333
+    },
+    "A-G": {
+      "n_patients": 8,
+      "n_ctracts": 19,
+      "pooled_7C": 18,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "7": 18
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0526
+    },
+    "D": {
+      "n_patients": 18,
+      "n_ctracts": 19,
+      "pooled_7C": 5,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 2,
+        "5": 2,
+        "6": 10,
+        "7": 5
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.7368
+    },
+    "7-E": {
+      "n_patients": 12,
+      "n_ctracts": 19,
+      "pooled_7C": 10,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 2,
+        "5": 3,
+        "6": 3,
+        "7": 10,
+        "10": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.4737
+    },
+    "5-G": {
+      "n_patients": 2,
+      "n_ctracts": 18,
+      "pooled_7C": 16,
+      "pooled_8C": 2,
+      "counts": {
+        "7": 16,
+        "8": 2
+      },
+      "f_8C_pooled": 0.1111,
+      "f_8C_mean": 0.1429,
+      "f_8C_sd": 0.1429,
+      "f_8C_max": 0.2857,
+      "difficulty": 0.1111
+    },
+    "B-G": {
+      "n_patients": 5,
+      "n_ctracts": 17,
+      "pooled_7C": 12,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 5,
+        "7": 12
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.2941
+    },
+    "B-C": {
+      "n_patients": 12,
+      "n_ctracts": 16,
+      "pooled_7C": 6,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 2,
+        "6": 7,
+        "7": 6,
+        "12": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.625
+    },
+    "A-bF": {
+      "n_patients": 12,
+      "n_ctracts": 16,
+      "pooled_7C": 6,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 3,
+        "6": 7,
+        "7": 6
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.625
+    },
+    "X-aU": {
+      "n_patients": 11,
+      "n_ctracts": 16,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "1": 1,
+        "4": 5,
+        "5": 8,
+        "6": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.9375
+    },
+    "E-C": {
+      "n_patients": 12,
+      "n_ctracts": 15,
+      "pooled_7C": 10,
+      "pooled_8C": 1,
+      "counts": {
+        "6": 4,
+        "7": 10,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0667,
+      "f_8C_mean": 0.0278,
+      "f_8C_sd": 0.0921,
+      "f_8C_max": 0.3333,
+      "difficulty": 0.3333
+    },
+    "E-aS": {
+      "n_patients": 12,
+      "n_ctracts": 14,
+      "pooled_7C": 9,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 5,
+        "7": 9
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.3571
+    },
+    "aO-aO": {
+      "n_patients": 7,
+      "n_ctracts": 14,
+      "pooled_7C": 8,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "5": 3,
+        "6": 2,
+        "7": 8
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.4286
+    },
+    "bC": {
+      "n_patients": 10,
+      "n_ctracts": 13,
+      "pooled_7C": 4,
+      "pooled_8C": 0,
+      "counts": {
+        "3": 4,
+        "5": 2,
+        "6": 3,
+        "7": 4
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.6923
+    },
+    "aS-B": {
+      "n_patients": 6,
+      "n_ctracts": 13,
+      "pooled_7C": 12,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 12
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0769
+    },
+    "X-V": {
+      "n_patients": 11,
+      "n_ctracts": 13,
+      "pooled_7C": 10,
+      "pooled_8C": 1,
+      "counts": {
+        "5": 1,
+        "6": 1,
+        "7": 10,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0769,
+      "f_8C_mean": 0.0909,
+      "f_8C_sd": 0.2875,
+      "f_8C_max": 1.0,
+      "difficulty": 0.2308
+    },
+    "G-B": {
+      "n_patients": 7,
+      "n_ctracts": 12,
+      "pooled_7C": 11,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 11
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0833
+    },
+    "X-6": {
+      "n_patients": 10,
+      "n_ctracts": 12,
+      "pooled_7C": 4,
+      "pooled_8C": 2,
+      "counts": {
+        "5": 3,
+        "6": 2,
+        "7": 4,
+        "8": 2,
+        "9": 1
+      },
+      "f_8C_pooled": 0.1667,
+      "f_8C_mean": 0.2,
+      "f_8C_sd": 0.4,
+      "f_8C_max": 1.0,
+      "difficulty": 0.6667
+    },
+    "A-aO": {
+      "n_patients": 11,
+      "n_ctracts": 11,
+      "pooled_7C": 9,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 2,
+        "7": 9
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.1818
+    },
+    "7-C": {
+      "n_patients": 11,
+      "n_ctracts": 11,
+      "pooled_7C": 6,
+      "pooled_8C": 1,
+      "counts": {
+        "5": 2,
+        "6": 2,
+        "7": 6,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0909,
+      "f_8C_mean": 0.0909,
+      "f_8C_sd": 0.2875,
+      "f_8C_max": 1.0,
+      "difficulty": 0.4545
+    },
+    "bF-X": {
+      "n_patients": 8,
+      "n_ctracts": 11,
+      "pooled_7C": 6,
+      "pooled_8C": 1,
+      "counts": {
+        "5": 1,
+        "6": 3,
+        "7": 6,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0909,
+      "f_8C_mean": 0.125,
+      "f_8C_sd": 0.3307,
+      "f_8C_max": 1.0,
+      "difficulty": 0.4545
+    },
+    "aS-aS": {
+      "n_patients": 8,
+      "n_ctracts": 11,
+      "pooled_7C": 5,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 6,
+        "7": 5
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5455
+    },
+    "bF": {
+      "n_patients": 6,
+      "n_ctracts": 10,
+      "pooled_7C": 7,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 3,
+        "7": 7
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.3
+    },
+    "G-G": {
+      "n_patients": 5,
+      "n_ctracts": 9,
+      "pooled_7C": 5,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "5": 2,
+        "6": 1,
+        "7": 5
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.4444
+    },
+    "7-aS-aS": {
+      "n_patients": 8,
+      "n_ctracts": 9,
+      "pooled_7C": 8,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 8
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.1111
+    },
+    "X-H": {
+      "n_patients": 5,
+      "n_ctracts": 8,
+      "pooled_7C": 5,
+      "pooled_8C": 2,
+      "counts": {
+        "6": 1,
+        "7": 5,
+        "8": 2
+      },
+      "f_8C_pooled": 0.25,
+      "f_8C_mean": 0.2,
+      "f_8C_sd": 0.4,
+      "f_8C_max": 1.0,
+      "difficulty": 0.375
+    },
+    "B-A": {
+      "n_patients": 8,
+      "n_ctracts": 8,
+      "pooled_7C": 6,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "6": 1,
+        "7": 6
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.25
+    },
+    "X-E": {
+      "n_patients": 6,
+      "n_ctracts": 8,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "4": 1,
+        "5": 5,
+        "6": 1,
+        "8": 1
+      },
+      "f_8C_pooled": 0.125,
+      "f_8C_mean": 0.1667,
+      "f_8C_sd": 0.3727,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "X-I": {
+      "n_patients": 6,
+      "n_ctracts": 7,
+      "pooled_7C": 4,
+      "pooled_8C": 1,
+      "counts": {
+        "5": 1,
+        "6": 1,
+        "7": 4,
+        "8": 1
+      },
+      "f_8C_pooled": 0.1429,
+      "f_8C_mean": 0.0833,
+      "f_8C_sd": 0.1863,
+      "f_8C_max": 0.5,
+      "difficulty": 0.4286
+    },
+    "6+": {
+      "n_patients": 6,
+      "n_ctracts": 7,
+      "pooled_7C": 4,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 4
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.4286
+    },
+    "C-7": {
+      "n_patients": 6,
+      "n_ctracts": 7,
+      "pooled_7C": 7,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 7
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "5-W": {
+      "n_patients": 6,
+      "n_ctracts": 6,
+      "pooled_7C": 5,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "7": 5
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.1667
+    },
+    "E-G": {
+      "n_patients": 6,
+      "n_ctracts": 6,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 2,
+        "6": 1,
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "W": {
+      "n_patients": 4,
+      "n_ctracts": 6,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 3,
+        "6": 1,
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.6667
+    },
+    "J-B": {
+      "n_patients": 5,
+      "n_ctracts": 5,
+      "pooled_7C": 4,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "7": 4
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.2
+    },
+    "7+-7-7": {
+      "n_patients": 5,
+      "n_ctracts": 5,
+      "pooled_7C": 5,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 5
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aA-X": {
+      "n_patients": 5,
+      "n_ctracts": 5,
+      "pooled_7C": 5,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 5
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "V-6+": {
+      "n_patients": 5,
+      "n_ctracts": 5,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "6": 1,
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.4
+    },
+    "B-H": {
+      "n_patients": 5,
+      "n_ctracts": 5,
+      "pooled_7C": 5,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 5
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "C-F": {
+      "n_patients": 3,
+      "n_ctracts": 4,
+      "pooled_7C": 3,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 3,
+        "8": 1
+      },
+      "f_8C_pooled": 0.25,
+      "f_8C_mean": 0.1667,
+      "f_8C_sd": 0.2357,
+      "f_8C_max": 0.5,
+      "difficulty": 0.25
+    },
+    "bC-7": {
+      "n_patients": 4,
+      "n_ctracts": 4,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "3": 1,
+        "6": 1,
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "I-X": {
+      "n_patients": 4,
+      "n_ctracts": 4,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.25
+    },
+    "G-7": {
+      "n_patients": 3,
+      "n_ctracts": 4,
+      "pooled_7C": 4,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 4
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-G-6+": {
+      "n_patients": 4,
+      "n_ctracts": 4,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 2,
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "aA": {
+      "n_patients": 4,
+      "n_ctracts": 4,
+      "pooled_7C": 4,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 4
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "D-aO": {
+      "n_patients": 4,
+      "n_ctracts": 4,
+      "pooled_7C": 2,
+      "pooled_8C": 1,
+      "counts": {
+        "3": 1,
+        "7": 2,
+        "8": 1
+      },
+      "f_8C_pooled": 0.25,
+      "f_8C_mean": 0.25,
+      "f_8C_sd": 0.433,
+      "f_8C_max": 1.0,
+      "difficulty": 0.5
+    },
+    "aS-A": {
+      "n_patients": 4,
+      "n_ctracts": 4,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.25
+    },
+    "X-D": {
+      "n_patients": 4,
+      "n_ctracts": 4,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "1": 1,
+        "5": 1,
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "C-C": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 2,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.6667
+    },
+    "Z-7": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 2,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 2,
+        "8": 1
+      },
+      "f_8C_pooled": 0.3333,
+      "f_8C_mean": 0.3333,
+      "f_8C_sd": 0.4714,
+      "f_8C_max": 1.0,
+      "difficulty": 0.3333
+    },
+    "Q-X": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "7-7+": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2,
+        "9": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.3333
+    },
+    "7+-7": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aS-7-aS": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "E-7": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "B-aA": {
+      "n_patients": 2,
+      "n_ctracts": 3,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-V-bD": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.3333
+    },
+    "aS-G": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 1,
+      "pooled_8C": 1,
+      "counts": {
+        "6": 1,
+        "7": 1,
+        "8": 1
+      },
+      "f_8C_pooled": 0.3333,
+      "f_8C_mean": 0.3333,
+      "f_8C_sd": 0.4714,
+      "f_8C_max": 1.0,
+      "difficulty": 0.6667
+    },
+    "aE-X": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.3333
+    },
+    "D-C": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "6": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.6667
+    },
+    "A-aA": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "W-X": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.3333
+    },
+    "A-J": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "6": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "5-bI": {
+      "n_patients": 2,
+      "n_ctracts": 3,
+      "pooled_7C": 2,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 2,
+        "8": 1
+      },
+      "f_8C_pooled": 0.3333,
+      "f_8C_mean": 0.5,
+      "f_8C_sd": 0.5,
+      "f_8C_max": 1.0,
+      "difficulty": 0.3333
+    },
+    "7-bF": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 3,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 3
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aS-aO-aS": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 2,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.6667
+    },
+    "H-X": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.3333
+    },
+    "X-X-X": {
+      "n_patients": 3,
+      "n_ctracts": 3,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 1,
+        "12": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.6667
+    },
+    "5-aU": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 1,
+        "8": 1
+      },
+      "f_8C_pooled": 0.5,
+      "f_8C_mean": 0.5,
+      "f_8C_sd": 0.5,
+      "f_8C_max": 1.0,
+      "difficulty": 0.5
+    },
+    "7-J": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "A-aH": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "1": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "7-Z": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "Z-X": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "7-bC": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "G-6+": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "D-D": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "V": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "X-bF": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "B-bB": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "B-bF": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "aS-C": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "aE": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 1,
+        "8": 1
+      },
+      "f_8C_pooled": 0.5,
+      "f_8C_mean": 0.5,
+      "f_8C_sd": 0.5,
+      "f_8C_max": 1.0,
+      "difficulty": 0.5
+    },
+    "A-Z": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "A-C": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "7+": {
+      "n_patients": 1,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 1,
+        "8": 1
+      },
+      "f_8C_pooled": 0.5,
+      "f_8C_mean": 0.5,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.5,
+      "difficulty": 0.5
+    },
+    "T-X": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "X-aJ": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "X-V-H": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "B-D": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 1,
+        "8": 1
+      },
+      "f_8C_pooled": 0.5,
+      "f_8C_mean": 0.5,
+      "f_8C_sd": 0.5,
+      "f_8C_max": 1.0,
+      "difficulty": 0.5
+    },
+    "aS-aO": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aO-D": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "T": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "bE": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aO-C": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aF": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "6": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "bF-B": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aN": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aN-X": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "4-7": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aK": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "5-F": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-X-bB": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "A-K": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aX-X": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "X-X-G": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 1,
+        "8": 1
+      },
+      "f_8C_pooled": 0.5,
+      "f_8C_mean": 0.5,
+      "f_8C_sd": 0.5,
+      "f_8C_max": 1.0,
+      "difficulty": 0.5
+    },
+    "U": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 1,
+      "counts": {
+        "7": 1,
+        "8": 1
+      },
+      "f_8C_pooled": 0.5,
+      "f_8C_mean": 0.5,
+      "f_8C_sd": 0.5,
+      "f_8C_max": 1.0,
+      "difficulty": 0.5
+    },
+    "X-aF": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "aJ": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "7-aJ": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "6": 1,
+        "8": 1
+      },
+      "f_8C_pooled": 0.5,
+      "f_8C_mean": 0.5,
+      "f_8C_sd": 0.5,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "Q": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 2,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "D-7": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1,
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.5
+    },
+    "X-bC": {
+      "n_patients": 2,
+      "n_ctracts": 2,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 2
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "7-bG": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "bG-B": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "J-7": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "W-X-6+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "bF-7": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aH-X": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "Z": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "E-I": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aO-aA": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-O": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "I-G": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "C-X-6+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "B-aR": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "F-W": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aP-C": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "G-H": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "H-B": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "bC-6+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "5-V": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "A-aM": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aM-B": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "G-X-6": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "I-A": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "7-bH": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "bH-B": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-Q": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "A-aG": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aG-B": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "B-Z": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "S": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aO-F": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "F-X": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aB": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "4+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aS-D": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "B-aO": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "G-J": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "E-bB": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "4+-5": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "8": 1
+      },
+      "f_8C_pooled": 1.0,
+      "f_8C_mean": 1.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "5-7": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "B-S": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "1": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "X-X-aB": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "6+-A": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "bF-aS": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aK-X": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "C-bE": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-aW": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "8": 1
+      },
+      "f_8C_pooled": 1.0,
+      "f_8C_mean": 1.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "7-V": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "H-7": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "7-6+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "G-bB-6+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "D-G": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "bB-X-6+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "Z-A": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "8": 1
+      },
+      "f_8C_pooled": 1.0,
+      "f_8C_mean": 1.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "H-bK": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-G-6": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aR": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aR-X": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aI": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "J": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "J-bF": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aU-F": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "7-7-7+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "7-7+-7": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aS-aF": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aO-aS-aO": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "X-G-bD": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "8": 1
+      },
+      "f_8C_pooled": 1.0,
+      "f_8C_mean": 1.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "B-I": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "B-aU": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "7-bE": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "7-O": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "O-B": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "bI": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "7-aI": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aS-aZ": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "8": 1
+      },
+      "f_8C_pooled": 1.0,
+      "f_8C_mean": 1.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "D-bJ": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "B-aE": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-H-aB": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aO-G": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "A-aS": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-aX": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "C-X-bB": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aO-7-aS": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "7-aE": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aS-H": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-P-6": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "H": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aJ-aJ": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "B-W": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aO-J": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "I": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "D-aK": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "8": 1
+      },
+      "f_8C_pooled": 1.0,
+      "f_8C_mean": 1.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "7+-7-7+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "bB-X": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "bJ-X": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "A-U": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "U-bF": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "B-bC": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aS-7-aO": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "G-E": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "Z-Z": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "Z-B": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "8": 1
+      },
+      "f_8C_pooled": 1.0,
+      "f_8C_mean": 1.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "bF-aA": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "G-aO": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aS-aS-aS": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "X-U": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aT-G": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-W": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "3": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "G-aX": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "B-aQ": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aO-bC": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "3": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "7-aO-7+": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aO-7+-7": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "7-D": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "X-X-H": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aU": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "X-H-H": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "4": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "X-P": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "6": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "P": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "aO-aO-aS": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "X-bB": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aS-aR": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 1,
+      "counts": {
+        "8": 1
+      },
+      "f_8C_pooled": 1.0,
+      "f_8C_mean": 1.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 1.0,
+      "difficulty": 1.0
+    },
+    "E-E": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 0,
+      "pooled_8C": 0,
+      "counts": {
+        "5": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 1.0
+    },
+    "G-C": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "G-aA": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "P-C": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    },
+    "aC-aJ": {
+      "n_patients": 1,
+      "n_ctracts": 1,
+      "pooled_7C": 1,
+      "pooled_8C": 0,
+      "counts": {
+        "7": 1
+      },
+      "f_8C_pooled": 0.0,
+      "f_8C_mean": 0.0,
+      "f_8C_sd": 0.0,
+      "f_8C_max": 0.0,
+      "difficulty": 0.0
+    }
+  },
+  "n_skipped": 0,
+  "meta": {
+    "chemistry": "ONT R10.4.1 (LSK114)",
+    "source": "1000 Genomes LCLs (public; 71 samples, HG00xxx)",
+    "n_samples": 71,
+    "regime": "WGS",
+    "note": "Basecalled with MIXED dorado versions (034/081/090, sup, 5mCG_5hmCG). Homopolymer accuracy differs across those releases and this is a homopolymer error model (applies to BOTH the dupC 8C null and the delCC 5C null), so f is a MIXTURE over basecalling regimes — conservative (includes older, noisier basecallers) rather than matched to any single one. Rebuild on your own controls if your chemistry or basecaller differs.",
+    "built": "2026-07-05"
+  }
+}

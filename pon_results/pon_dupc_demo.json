@@ -1,0 +1,49 @@
+{
+  "_note": "SYNTHETIC demo Panel-of-Normals for the dupC caller — plausible ONT homopolymer error rates, NOT derived from any patient. It only lets the pipeline run and shows the format. For real calls, build your own PoN on YOUR negative controls (anti-circularity): per-sample profiles via muc1_analyzer.detectors.dupc_pon.context_ctract_profile, then aggregate().",
+  "n_profiles": 0,
+  "synthetic": true,
+  "contexts": {
+    "7-7-7": {
+      "n_ctracts": 320,
+      "counts": {
+        "5": 2,
+        "6": 14,
+        "7": 300,
+        "8": 4
+      },
+      "f_8C_pooled": 0.0125,
+      "difficulty": 0.0625
+    },
+    "aS-7-7": {
+      "n_ctracts": 150,
+      "counts": {
+        "5": 1,
+        "6": 7,
+        "7": 140,
+        "8": 2
+      },
+      "f_8C_pooled": 0.0133,
+      "difficulty": 0.0667
+    },
+    "7-7-aS": {
+      "n_ctracts": 110,
+      "counts": {
+        "6": 6,
+        "7": 102,
+        "8": 2
+      },
+      "f_8C_pooled": 0.0182,
+      "difficulty": 0.0727
+    },
+    "aS-7-aS": {
+      "n_ctracts": 60,
+      "counts": {
+        "6": 4,
+        "7": 55,
+        "8": 1
+      },
+      "f_8C_pooled": 0.0167,
+      "difficulty": 0.0833
+    }
+  }
+}
