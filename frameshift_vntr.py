@@ -174,7 +174,7 @@ def name_variant(fa, contig, vstart, rep, net, known):
 
 def _aggregate_overcalls(net_counts, ont_slack=4, max_size=4):
     """ONT miscounts homopolymers: a true +1 dupC is basecalled +1, but also +2/+3/+4 (and sometimes
-    -1). Counting only the exact dominant shift undercounts a real frameshift (measured on GAU: +1=33%
+    -1). Counting only the exact dominant shift undercounts a real frameshift (measured on a carrier: +1=33%
     but +2/+3 add ~8% more, all the same dupC). So we take the DOMINANT non-zero shift (within
     +-max_size — larger nets are STRUCTURAL indels, a different event, e.g. +18 bp = X-33_34ins, which
     belong to run's motif-dictionary consensus, not this point-frameshift screen) as the variant and
@@ -218,7 +218,7 @@ def _background_insertion_rate(shift, cover, min_reads):
 def _binom_sf(k, n, p):
     """P(X >= k) for X~Binom(n,p). Exact for small n; for large n (thousands of reads) the exact sum
     overflows / is slow, so use a normal approximation there. (The exact path was raising 'int too large
-    to convert' on a deep contig — ELE.)"""
+    to convert' on a deep contig.)"""
     if p <= 0:
         return 1.0 if k <= 0 else 0.0
     if p >= 1:
@@ -246,13 +246,13 @@ def _phase_denominator(bam, contig, vstart, vend, rep, net, ref_len, carrier_rea
         carrier haplotype is strongly enriched for the variant AND the other haplotype is strongly
         depleted. Per-allele VAF, no ÷2.
       · ('halved', None, None)   if no usable phasing (too few SNPs, OR the split did NOT separate
-        carriers from non-carriers — the sequence-homozygous case, e.g. GAU, where find_phasing_snps
+        carriers from non-carriers — the sequence-homozygous case, where find_phasing_snps
         picks up noise positions that do not distinguish the two identical alleles). Caller uses n//2.
       · ('pooled', None, None)   on error → caller keeps the raw pooled fraction.
 
     The separation check is the whole point: on a real length-homozygote-but-heterozygous carrier the
     two alleles are identical in sequence except the dupC, so ANY SNP-based split is spurious and both
-    'haplotypes' end up with the SAME pooled carrier fraction (~0.33 on GAU). We detect exactly that and
+    'haplotypes' end up with the SAME pooled carrier fraction (~0.33 there). We detect exactly that and
     refuse to trust the phasing."""
     try:
         from muc1_analyzer.caller import find_phasing_snps, phase_reads
@@ -302,7 +302,7 @@ def call(bam, ref, contig, *, floor=0.20, called_at=0.35,
     (insertion: floor / called_at ; deletion: del_floor / del_called_at)
 
     VAF / denominator: different-length alleles -> pooled k/n is already per-allele; same-length alleles
-    -> phase per-allele when SNPs truly separate the haplotypes, else n//2 (sequence-homozygous, e.g. GAU).
+    -> phase per-allele when SNPs truly separate the haplotypes, else n//2 (sequence-homozygous).
     No min-read rejection: allele lengths are trusted upstream, so a low-coverage repeat on a real allele
     is genuine signal — it is never dropped, only routed to POSITIVE_LOW_DEPTH / NEEDS_IGV."""
     fa = pysam.FastaFile(ref)
@@ -371,9 +371,9 @@ def call(bam, ref, contig, *, floor=0.20, called_at=0.35,
         #   · NEEDS_IGV_FOR_ZYGOSITY (NEGATIVE): the VAF reaches the call threshold ONLY because n//2 was
         #     applied (raw pooled fraction is below threshold), that n//2 came from a length-homozygote
         #     ASSUMPTION whose second peak was rejected on CONTRAST alone (zygosity_uncertain — it may be a
-        #     real second allele, as in JOT 77|80), AND coverage is < zygosity_depth so the n//2 rests on
+        #     real second allele, as in a 77|80 case), AND coverage is < zygosity_depth so the n//2 rests on
         #     too few reads to trust. A het would give half this VAF and be NEG, so we do not call it — we
-        #     flag the zygosity for IGV. (GAU is spared: same n//2 bascule, but coverage ≫ zygosity_depth.)
+        #     flag the zygosity for IGV. (that case is spared: same n//2 bascule, but coverage ≫ zygosity_depth.)
         #   · POSITIVE_LOW_DEPTH (POSITIVE): VAF at the CALLED level but coverage < min_cover_igv OR not
         #     above background — a real variant, flagged for depth confirmation; counts as detected.
         #   · NEEDS_IGV (NEGATIVE): grey zone (floor ≤ VAF < call-threshold) — variant itself uncertain.
@@ -431,7 +431,7 @@ def call(bam, ref, contig, *, floor=0.20, called_at=0.35,
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Frameshift caller by motif-length shift, bounded to the VNTR.")
-    ap.add_argument("-b", "--bam", required=True, help="VNTR-aligned BAM (muc1 alignment profile)")
+    ap.add_argument("-b", "--bam", required=True, help="VNTR-aligned BAM (e.g. the muc1 align profile)")
     ap.add_argument("-r", "--ref", required=True, help="multi-contig VNTR reference (…Kirby.fa)")
     ap.add_argument("-c", "--contig", action="append", required=True,
                     help="contig to scan, e.g. MUC1_VNTR_44repeats (repeatable)")

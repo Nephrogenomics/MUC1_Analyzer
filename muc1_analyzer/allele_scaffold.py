@@ -44,7 +44,7 @@ def contigs_for_lengths(counts: dict, lengths, *, window: int = 5) -> list:
     Picking `min(abs(k - L))` over any contig carrying at least one read was wrong on a tandem, and the
     cost is measured. ONT length calls SMEAR across neighbouring contigs, so a target of 82 finds 78
     holding the allele's 139 reads while 79-82 each catch a handful — and the old rule took 81 with 24
-    reads because it was one copy closer. On SER that turned `k=13/98, p_bonf 1.7e-05` into
+    reads because it was one copy closer. On one carrier that turned `k=13/98, p_bonf 1.7e-05` into
     `k=5/24, p_bonf 0.045`: a 2700x loss of significance, from choosing a name over the data.
 
     The smear widens with array length, which is why the sensitivity fell with it: 0.80 on mutant alleles

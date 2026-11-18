@@ -2370,7 +2370,7 @@ def main(argv=None):
             )
             # Validate the SNP split against the CALLED variant. On a size-homozygous carrier the "SNPs"
             # can be ONT NOISE that does not separate the two alleles — the frameshift then stays diluted
-            # below the consensus threshold in BOTH groups and is named on neither (the CHU failure: 58
+            # below the consensus threshold in BOTH groups and is named on neither (a measured failure: 58
             # carrier reads split 123/27, carrier fraction ~0.39/0.37). If the carrier reads are not
             # CONCENTRATED on one side (same criterion the detector uses: hi>=0.60 & lo<=0.20), the split is
             # not allele-separating → phase BY THE VARIANT instead so the carrier consensus surfaces it.
@@ -2497,7 +2497,7 @@ def main(argv=None):
         # threshold (0.35 for an insertion) and 0.5, the +1 is carried by FEWER THAN HALF the reads of its
         # own allele: ONT homopolymer drop-out (each read hesitates on the C-run length) dilutes it below the
         # per-base consensus threshold, so the plain per-contig consensus loses it — the motif rebuilds as a
-        # clean 60 bp with the dupC absent (the two CHU 44|70 carriers, motif 28). Fix: rebuild ONLY the
+        # clean 60 bp with the dupC absent (two 44|70 carriers, motif 28). Fix: rebuild ONLY the
         # carrier contig's consensus from the reads that actually bear the frameshift (the detector's
         # carrier_reads), SETTING ASIDE the drop-out reads of that same allele. We do NOT spawn a third
         # haplotype from the set-aside reads — they are the SAME allele, not a distinct one. Strictly gated

@@ -114,8 +114,8 @@ import collections
 # the scaffold pool is diluted — while on short alleles it reaches 0.24-0.83. So at 0.20 this gate stops
 # being a noise floor and starts cutting into signal. Forcing the clinical lengths on the missed long
 # carriers showed what it costs:
-#     OUE  contig 63  k=14/94  frac 0.149  p_bonf 3.7e-07   <- rejected on effect size alone
-#     SER  contig 78  k= 9/71  frac 0.127  p_bonf 2.6e-03
+#     case A  contig 63  k=14/94  frac 0.149  p_bonf 3.7e-07   <- rejected on effect size alone
+#     case B  contig 78  k= 9/71  frac 0.127  p_bonf 2.6e-03
 # Seven orders of magnitude past alpha, refused because 0.149 < 0.20. In that regime `p_bonf` is what
 # discriminates and the fraction is not informative.
 # MEASURED PRICE at the SHIPPED alpha of 0.005, pooled homogeneous arms (58 carriers / 119 negatives):

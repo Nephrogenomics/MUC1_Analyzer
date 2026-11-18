@@ -267,7 +267,7 @@ def dispatch_frameshift_vntr(vntr_bam, vntr_ref, *, lengths=None, min_mapq=0,
               "ending in '/ccs' so the consensus (>50 %) path is used.", file=sys.stderr)
 
     # UNCERTAIN zygosity: a single length was returned because the 2nd peak was rejected ON CONTRAST
-    # (a "tail bump" that might be a real allele — JOT), as opposed to a clean single peak or a
+    # (a "tail bump" that might be a real allele), as opposed to a clean single peak or a
     # consensus-verified Delta<=1 fusion. Detected exactly as the validation bench does.
     zygosity_uncertain = (len(lengths) == 1) and ("contrast" in note.lower())
 

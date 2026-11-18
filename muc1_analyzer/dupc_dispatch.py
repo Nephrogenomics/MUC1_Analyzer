@@ -293,7 +293,7 @@ def dispatch_dupc_vntr(vntr_bam: str, vntr_ref: str, *, lengths=None, mut_len: i
 
     # POWER IS NOT ONLY A NEGATIVE'S BUSINESS. Until 2026-08-07 `power_by_allele` gated the NEGATIVE
     # branch alone, so a call came out "CONFIRMED" with nothing said about the other allele — even when
-    # that allele carried 10 reads and was never testable. FER: called on its 43-copy scaffold while its
+    # that allele carried 10 reads and was never testable. The false positive: called on its 43-copy scaffold while its
     # 82-copy allele had 11 reads and no array unit reached the coverage floor. Whatever the call means,
     # "this subject is a heterozygous carrier and nothing else" is NOT what was measured, and a positive
     # that hides an untested allele is the same silence as a negative that hides one.
@@ -313,7 +313,7 @@ def dispatch_dupc_vntr(vntr_bam: str, vntr_ref: str, *, lengths=None, mut_len: i
     # artifact is made by the PLACEMENT (aligning an N-copy allele to a shorter contig forces the
     # surplus into gaps, and a gap inside a C-run is a run-length shift) and evaporates. On the cleaned
     # arm 24 of 27 called carriers replicate on at least one neighbouring scaffold; the lone false
-    # positive, FER, replicates on none.
+    # positive replicates on none.
     # ⚠ NOT a filter: requiring one replication would drop 3 carriers to remove 1 false positive — the
     # same bad trade as the proximity scaffold rule. It is reported so a reader can weigh a call, and
     # deliberately does not change one.

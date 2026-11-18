@@ -591,7 +591,7 @@ def align_two_stage(fq: str, vntr_ref: str, out_bam: str, *, threads: int = 8, p
     # ⚠ This window must be >= `allele_scaffold.contigs_for_lengths`' own window (5). They model the SAME
     # thing — the smear of ONT length calls across neighbouring contigs — and the scaffold step picks the
     # read MODE within its window. A narrower window here silently deletes the very contig that step would
-    # have chosen: measured on SER, the allele's 139 reads sit 4 copies from the called length, which a
+    # have chosen: measured on one carrier, the allele's 139 reads sit 4 copies from the called length, which a
     # window of 3 would have excluded from the mini reference altogether.
     want = []
     for a in alleles:

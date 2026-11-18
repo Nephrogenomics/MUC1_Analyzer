@@ -138,7 +138,7 @@ def _cmd_run_pcr(argv=None) -> int:
         return rc or 1
 
     # Index the consensus FASTA (one sequence per resolved haplotype length — a single one on a
-    # length-homozygote such as GAU, two on a length-heterozygote). `--fasta-consensus` writes the FASTA
+    # length-homozygote, two on a length-heterozygote). `--fasta-consensus` writes the FASTA
     # but not its .fai; downstream tools (and IGV) want the index.
     try:
         import pysam

@@ -4,8 +4,8 @@ sequences at the BASE level.
 
 WHY (the length arbiter alone is not enough). Two allele lengths that differ by ≥2 copies are two alleles
 outright — a single allele's flank-length measurement does not scatter by 2. The ambiguous case is Δ≤1:
-either two genuine alleles that happen to sit 0–1 copy apart (KCH 43|44), or ONE allele whose measured
-length scatters over adjacent bins (a length-homozygote, GAU 44|44). Length cannot separate these; the
+either two genuine alleles that happen to sit 0–1 copy apart (a 43|44 pair), or ONE allele whose measured
+length scatters over adjacent bins (a length-homozygote, 44|44). Length cannot separate these; the
 SEQUENCE can. Two distinct MUC1 alleles carry several base differences along the array, whereas one allele
 split by measurement noise gives ~identical consensuses.
 
