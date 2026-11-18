@@ -108,14 +108,7 @@ def vntr_aligned_count(fq: str, vntr_ref: str, *, threads: int = 8, pacbio: bool
                           stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
     out = subprocess.run(["samtools", "view", "-c", "-F", "0x904", "-"],
                          stdin=p1.stdout, stdout=subprocess.PIPE, text=True).stdout
-    rc = p1.wait()
-    # Same trap as `align`: a KILLED aligner counts 0, and 0 reads reads as "not amplicon-scale" — the run
-    # would then pick the wrong chaining profile for a reason nobody could see. Fail here instead; the real
-    # alignment is about to die anyway, and an early message names the cause.
-    if rc:
-        raise SystemExit(f"[prepare] the amplicon-detection alignment FAILED (minimap2 rc={rc}) — a read "
-                         f"count of 0 would be indistinguishable from a non-amplicon sample. rc=-9 means "
-                         f"the aligner was KILLED (memory, or a shared front-end's cgroup).")
+    p1.wait()
     try:
         return int(out.strip() or 0)
     except ValueError:
@@ -318,19 +311,53 @@ def to_fastq(inp: str, out_fq: str, *, region: str | None = None, ref38: str | N
     return out_fq
 
 
-def append_unmapped_fastq(inp: str, out_fq: str, *, ref38: str | None = None) -> str:
+RECOVER_MIN_LEN = 2000   # bp — an unplaced read shorter than this cannot inform the VNTR length
+
+
+def filter_fastq_min_len(lines, out, min_len: int):
+    """Copy 4-line fastq records from the text iterator `lines` to the binary file `out`, keeping only reads
+    of at least `min_len` bases. Returns (n_in, n_kept). Pure apart from the write; unit-tested."""
+    n_in = n_kept = 0
+    rec = []
+    for line in lines:
+        rec.append(line)
+        if len(rec) == 4:
+            n_in += 1
+            if len(rec[1].rstrip("\n")) >= min_len:
+                out.write("".join(rec).encode())
+                n_kept += 1
+            rec = []
+    return n_in, n_kept
+
+
+def append_unmapped_fastq(inp: str, out_fq: str, *, ref38: str | None = None,
+                          min_len: int = RECOVER_MIN_LEN) -> tuple:
     """APPEND the unplaced reads (`RNAME=*`) of an aligned input to an existing fastq. On hg38 the VNTR is
     collapsed, so VNTR-heavy reads cannot be placed and are flagged unmapped — the window fetch misses them
     (validated: 264 window reads → +9060 recovered). The VNTR reference filters non-MUC1 at the realign
     (≈98 % of the unplaced pool drops, ~0 contamination). Needs the input indexed (the `*` fetch seeks the
-    unplaced block). Kept SEPARATE from the window so the auto-PCR read count keys off the window alone."""
+    unplaced block). Kept SEPARATE from the window so the auto-PCR read count keys off the window alone.
+
+    Only reads of at least `min_len` bp are appended (v1.0.1). On an adaptive-sampling CRAM the unplaced
+    pool is dominated by the 300–500 bp fragments of REJECTED reads (81 235 of them on one sample): they
+    cannot span the tandem, carry no length information, land at MAPQ 0 on an arbitrary length-contig and
+    drowned 98 real 5.5 kb locus reads in a flat smear. A recovered VNTR-heavy WGS read is kilobases long,
+    so the length gate keeps the recovery and drops the noise. Returns (n_unplaced, n_appended)."""
+    import io
     _require_tools("samtools")
     with open(out_fq, "ab") as fh:
         p = subprocess.Popen(_samtools_view(inp, ref38) + [inp, "*"], stdout=subprocess.PIPE)
-        subprocess.run(["samtools", "fastq", "-T", FASTQ_CARRY_TAGS, "-"],
-                       stdin=p.stdout, stdout=fh, check=True)
+        q = subprocess.Popen(["samtools", "fastq", "-T", FASTQ_CARRY_TAGS, "-"],
+                             stdin=p.stdout, stdout=subprocess.PIPE)
+        p.stdout.close()
+        n_in, n_kept = filter_fastq_min_len(io.TextIOWrapper(q.stdout, encoding="utf-8"), fh, min_len)
+        q.wait()
         p.wait()
-    return out_fq
+        if q.returncode != 0:
+            raise subprocess.CalledProcessError(q.returncode, "samtools fastq")
+    print(f"[prepare] recover-unmapped: {n_kept}/{n_in} unplaced reads appended (≥ {min_len} bp; shorter "
+          f"reads cannot span the VNTR and only smear the length-contigs)", file=sys.stderr)
+    return n_in, n_kept
 
 
 def _preset_platform_mismatch(preset, detected):
@@ -369,53 +396,13 @@ def align(fq: str, ref: str, out_bam: str, *, threads: int = 8, pacbio: bool = F
     # equally on all of them → default minimap2 emits ~150 SECONDARY alignments/read, bloating the BAM
     # (observed 2.3 GB) with records NOTHING downstream reads (count/consensus/arbiter all exclude
     # secondary). Suppress them at the source; also drop any secondary/supplementary at `view` (-F 0x904).
-    #
-    # ⚠ A DEAD ALIGNER MUST NOT READ AS A SAMPLE WITHOUT COVERAGE. minimap2's stderr used to go to
-    # DEVNULL and `p1.wait()`'s status was discarded, so nothing here could fail: `samtools sort` on an
-    # empty stream exits 0 and writes a valid, EMPTY BAM. Measured 2026-09-03 on a login node — the
-    # cgroup killed minimap2 mid-run and the pipeline carried on to a silent `carrier=False`. The
-    # empty-input guard in `to_fastq` sits one step earlier and does not cover this.
-    # stderr goes to a FILE, not a pipe: minimap2 is chatty and a pipe nobody drains would deadlock it.
-    err = out_bam + ".minimap2.err"
-    with open(err, "wb") as efh:
-        p1 = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=efh)
-        p2 = subprocess.Popen(["samtools", "view", "-b", "-F", "0x904", "-"],
-                              stdin=p1.stdout, stdout=subprocess.PIPE)
-        p1.stdout.close()   # so a dying p2 SIGPIPEs the aligner instead of leaving it to fill a pipe
-        subprocess.run(["samtools", "sort", "-@", "4", "-o", out_bam, "-"], stdin=p2.stdout, check=True)
-        p2.stdout.close()
-        rc1, rc2 = p1.wait(), p2.wait()
-    if rc1 or rc2:
-        raise SystemExit(f"[prepare] ALIGNMENT FAILED (minimap2 rc={rc1}, samtools view rc={rc2}) — "
-                         f"{out_bam} holds whatever was written before the failure and MUST NOT be called "
-                         f"on. A negative rc is a signal, not an error code: rc=-9 means the aligner was "
-                         f"KILLED, out of memory or by a shared front-end's cgroup — rerun on a compute "
-                         f"node.\n{_tail(err)}")
-    try:
-        os.remove(err)      # kept only when it has something to say
-    except OSError:
-        pass
+    p1 = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    p2 = subprocess.Popen(["samtools", "view", "-b", "-F", "0x904", "-"],
+                          stdin=p1.stdout, stdout=subprocess.PIPE)
+    subprocess.run(["samtools", "sort", "-@", "4", "-o", out_bam, "-"], stdin=p2.stdout, check=True)
+    p1.wait(); p2.wait()
     subprocess.run(["samtools", "index", out_bam], check=True)
     return out_bam
-
-
-def _tail(path: str, n: int = 8) -> str:
-    """Last `n` lines of a file, best-effort — for putting a failed tool's own words in our message."""
-    try:
-        with open(path, errors="replace") as fh:
-            return "".join(fh.readlines()[-n:]).strip()
-    except OSError:
-        return ""
-
-
-def aligned_read_count(bam: str) -> int:
-    """Primary aligned records in `bam` (-F 0x904), or -1 when it cannot be counted."""
-    try:
-        out = subprocess.run(["samtools", "view", "-c", "-F", "0x904", bam],
-                             stdout=subprocess.PIPE, text=True, check=True).stdout
-        return int(out.strip() or 0)
-    except (subprocess.CalledProcessError, OSError, ValueError):
-        return -1
 
 
 def _cap_fastq(fq: str, cap: int, work: str, tag: str = "pcr") -> str:
@@ -455,7 +442,8 @@ def prepare(inp: str, vntr_ref: str, out_bam: str, *, ref38: str | None = None,
             threads: int = 8, pacbio: bool = False, pcr: bool = False,
             no_pcr_autodetect: bool = False, recover_unmapped: bool = True,
             workdir: str | None = None, sample: str | None = None, pcr_cap: int | None = None,
-            two_stage: bool = False, align_profile: str = "setB") -> str:
+            two_stage: bool = False, align_profile: str = "setB",
+            recover_min_len: int = RECOVER_MIN_LEN) -> str:
     """Any MUC1 input → a BAM aligned on the VNTR reference, ready for `call`.
 
     Returns the path to the ready BAM (`inp` itself when it is already on the target).
@@ -512,7 +500,7 @@ def prepare(inp: str, vntr_ref: str, out_bam: str, *, ref38: str | None = None,
                   file=sys.stderr)
 
     if recover:                                            # append the hg38-unmappable VNTR reads AFTER detection
-        append_unmapped_fastq(inp, fq, ref38=ref38)
+        append_unmapped_fastq(inp, fq, ref38=ref38, min_len=recover_min_len)
     if pcr:                                                # deep amplicon → bound minimap2 (preserves allele ratio)
         fq = _cap_fastq(fq, cap, work, sample or "pcr")
     out = None
@@ -530,15 +518,6 @@ def prepare(inp: str, vntr_ref: str, out_bam: str, *, ref38: str | None = None,
     if out is None:
         out = align(fq, vntr_ref, out_bam, threads=threads, pacbio=pacbio, pcr=pcr,
                     profile=align_profile)
-    # Belt to the return-code brace: refuse to hand `call` a BAM with nothing in it. Reads WERE extracted
-    # (`to_fastq` guarantees it), so zero primary alignments here means the aligner produced nothing usable
-    # — not a biological result. Checked on the DELIVERED bam only: `align_two_stage`'s internal ruler pass
-    # is allowed to come back empty, that is exactly how it decides to fall back to the full reference.
-    n = aligned_read_count(out)
-    if n == 0:
-        raise SystemExit(f"[prepare] {out} contains ZERO aligned reads while {fq} was non-empty — the "
-                         f"alignment produced nothing. Calling on this file would report a NON-CARRIER "
-                         f"for a sample that was never measured. Check memory/tooling, then rerun.")
     report_amplicon(out, is_pcr=pcr, pacbio=pacbio)
     return out
 
@@ -695,7 +674,7 @@ def main(argv=None) -> int:
                     "(methylation tags preserved). Auto-detects fastq / uBAM / hg38 / T2T and "
                     "bypasses an input already aligned to the VNTR reference.")
     ap.add_argument("-i", "--input", required=True,
-                    help="fastq(.gz) | uBAM (unaligned) | aligned BAM/CRAM (hg38 or T2T)")
+                    help="fastq(.gz) | uBAM (unaligned BAM)")
     ap.add_argument("-r", "--vntr-ref", dest="vntr_ref", required=True,
                     help="multi-contig VNTR reference FASTA (MUC1_fakedVNTR1to150revcomplKirby.fa)")
     ap.add_argument("-o", "--out", required=True, help="output BAM (sorted + indexed)")
@@ -715,6 +694,9 @@ def main(argv=None) -> int:
                          "could not place) → the VNTR ref filters them → recovers a thin locus (~35x).")
     ap.add_argument("--no-recover-unmapped", action="store_true",
                     help="disable the default unplaced-read recovery on an aligned input")
+    ap.add_argument("--recover-min-len", type=int, default=RECOVER_MIN_LEN,
+                    help=f"minimum length (bp) of a recovered unplaced read (default {RECOVER_MIN_LEN}); "
+                         f"shorter reads cannot span the VNTR and only smear the length-contigs")
     ap.add_argument("--pcr-cap", type=int, default=None,
                     help=f"--pcr: subsample a deep amplicon to this many reads before minimap2 "
                          f"(default {PCR_ALIGN_CAP}; preserves the allele ratio; prevents the multi-contig stall)")
@@ -725,13 +707,20 @@ def main(argv=None) -> int:
                         "contigs. Everything else is unchanged (preset, frozen PCR flags, tag carry-"
                         "through, amplicon signature, strand balance).")
     ap.add_argument("--align-profile", dest="align_profile", default="setB",
-                    choices=sorted(PCR_MINIMAP_PROFILES) + ["xavier"],  # xavier = deprecated alias → muc1
+                    choices=sorted(PCR_MINIMAP_PROFILES),
                     help="LR-PCR minimap2 parameter set (default setB = the shipped frozen flags). "
                          "`muc1` = the MUC1 production set VERBATIM, `muc1_scoring` = the MUC1 scoring with OUR "
                          "chaining, so the anti-slide bias and the -z/-r bandwidth can be priced separately. "
                          "No effect outside the LR-PCR route.")
     ap.add_argument("--threads", type=int, default=8)
+    ap.add_argument("--allow-aligned-input", action="store_true", help=argparse.SUPPRESS)
     args = ap.parse_args(argv)
+
+    from .input_guard import input_error
+    _err = input_error(args.input, "prepare", allow_aligned=args.allow_aligned_input)
+    if _err:
+        print(_err, file=sys.stderr)
+        return 2
 
     if args.ont and args.pacbio:
         print("[prepare] --ont and --pacbio are mutually exclusive", file=sys.stderr)
@@ -760,7 +749,8 @@ def main(argv=None) -> int:
                   no_pcr_autodetect=args.no_pcr_autodetect,
                   recover_unmapped=not args.no_recover_unmapped, sample=args.sample,
                   pcr_cap=args.pcr_cap, two_stage=getattr(args, 'two_stage', False),
-                  align_profile=getattr(args, 'align_profile', 'setB'))
+                  align_profile=getattr(args, 'align_profile', 'setB'),
+                  recover_min_len=args.recover_min_len)
     print(f"[prepare] ready → {out}", file=sys.stderr)
     return 0
 

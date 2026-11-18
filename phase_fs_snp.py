@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """phase_fs_snp — DIRECT single-molecule phasing of rs4072037 (the splice SNP) with the VNTR allele.
 
-The severity axis of the two-axis model rests on the MUTANT allele's rs4072037 status (C = MUC1-TR, VNTR
-retained → severe ; T = MUC1-Y, VNTR spliced out → protected). Until now that phase was INFERRED from a cis
+The MUC1_Score reports, for information, the MUTANT allele's rs4072037 base (it carries no weight in the
+score since 2026-08-31; the former two-axis model used it as a severity axis). That phase was INFERRED from a cis
 rule (rs4072037-T is cis with the short VNTR ~94 %). Long-read LR-PCR lets us OBSERVE it: rs4072037
 (chr1:155,192,276, ~370 bp 5′ of the tandem) sits inside the amplicon, and full-length reads span it AND the
 whole VNTR — so each read carries the SNP base AND its allele's copy number. Grouping reads by SNP base gives

@@ -403,7 +403,7 @@ def main(argv=None):
     ap.add_argument("--chrom", default="chr1")
     ap.add_argument("--start", type=int, default=None)
     ap.add_argument("--end", type=int, default=None)
-    ap.add_argument("--maxmm", type=int, default=9, help="max mismatches per 60bp anchor (~15%)")
+    ap.add_argument("--maxmm", type=int, default=9, help="max mismatches per 60bp anchor (~15%%)")
     ap.add_argument("--sep", type=int, default=8, help="min copies between alleles to call het (pooled)")
     ap.add_argument("--min-frac", type=float, default=0.006, help="peak floor as a fraction of spanning reads")
     ap.add_argument("--min-reads", type=int, default=6, help="absolute peak floor (reads)")

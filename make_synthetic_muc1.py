@@ -24,8 +24,11 @@ def main(out=None):
               "  vntr_ref.fa (+ .fai)   contigs MUC1_VNTR_Nrepeats, each N x the 60 bp motif A\n"
               "  synthetic.bam (+ .bai) mapped reads, length-heterozygous (20 vs 25 repeats)\n\n"
               "Then:\n"
-              "  python3 -m muc1_analyzer run -i OUTDIR/synthetic.bam -r OUTDIR/vntr_ref.fa "
-              "-s DEMO -o OUTDIR/out")
+              "  python3 -m muc1_analyzer call -b OUTDIR/synthetic.bam -r OUTDIR/vntr_ref.fa "
+              "-s DEMO --min-mq 0 --json OUTDIR/DEMO.json\n"
+              "  python3 -m muc1_analyzer score --analyzer-json OUTDIR/DEMO.json --snp-genotype 1\n"
+              "(synthetic.bam is already aligned to the synthetic VNTR reference, so it goes to `call`; "
+              "`run` takes FASTQ or uBAM only)")
         return
     OUT = out if out is not None else (argv[0] if argv else ".")
     os.makedirs(OUT, exist_ok=True)

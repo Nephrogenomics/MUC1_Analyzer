@@ -22,6 +22,14 @@ import os
 import subprocess
 import sys
 
+
+def _provenance():
+    try:
+        from .provenance import provenance
+        return provenance()
+    except Exception:
+        return None
+
 from .detectors import vntr
 # NB: `score.py` (LEGACY composite, DEL) is imported LAZILY, only in the legacy path (build_params /
 # --legacy-composite). The canonical TWO-AXIS path (clinical_call / analyzer-JSON) does NOT touch it, so the
@@ -159,6 +167,7 @@ def _run_clinical_call(args) -> int:
                      dosage=args.snp_genotype, w_onset=args.w_onset, w_splice=args.w_splice)
     res["sample"] = args.sample
     res["score_model"] = "single-axis (frameshift tail = mut_len − position ; rs4072037 informational)"
+    res["provenance"] = _provenance()
     out = json.dumps(res, indent=2, ensure_ascii=False)
     if args.output == "-":
         print(out)
@@ -210,7 +219,7 @@ def _run_phase1(args) -> int:
     if args.sample:
         row["sample"] = args.sample
 
-    # canonical TWO-AXIS, attached to the detection row (onset ← position, severity ← rs4072037 splice)
+    # MUC1_Score (frameshift tail = mut_len − position), attached to the detection row; rs4072037 informational
     from .clinical_call import score_from_fields
     ta = score_from_fields(row.get("vntr_len_mut"), row.get("vntr_len_healthy"), row.get("mut_position"),
                            rs4072037_mut=args.rs4072037_mut, dosage=row.get("snp_genotype"),
@@ -274,17 +283,11 @@ def main(argv=None):
         # `mutation_source` travels WITH the verdict: since the consensus can no longer veto the dupC
         # caller (2026-07-29), a carrier=True whose only witness is the caller is exactly the class of
         # verdict that changed — auditable from the score JSON alone, without a pre-fix baseline run.
-        # ⚠ `variant` read `mv.get("name")`, and `mutation_variant` has NO `name` key — it carries `motif`
-        # (consensus branch) or `label` (dupC-caller branch). So every score.json ever written on this
-        # route said `variant: null`, including for a confirmed carrier, while the analyzer JSON two
-        # levels down named the variant correctly. Found 2026-09-04 reading a control panel, where a row
-        # of `carrier=True variant=None` looked like a caller that fires without identifying anything.
-        res.update(sample=args.sample, carrier=frag.get("mutation_present"),
-                   variant=(mv.get("motif") or mv.get("label")),
-                   variant_repeat=mv.get("repeat_index"), variant_exact=mv.get("exact"),
+        res.update(sample=args.sample, carrier=frag.get("mutation_present"), variant=mv.get("name"),
                    mutation_source=frag.get("mutation_source"),
                    dupc_caller_called=frag.get("dupc_caller_called"),
                    score_model="single-axis (frameshift tail = mut_len − position ; rs4072037 informational)")
+        res["provenance"] = _provenance()
         out = json.dumps(res, indent=2, ensure_ascii=False)
         (print(out) if args.output == "-" else open(args.output, "w").write(out + "\n"))
         print(f"[MUC1_Score single-axis] {args.sample or '?'}: frameshift tail={res.get('fs_tail')} rep → "
@@ -300,6 +303,7 @@ def main(argv=None):
     result["sample"] = args.sample
     result["params"] = {k: v for k, v in params.__dict__.items() if k != "notes"}
     result["score_model"] = "legacy_composite (DEL/rs4072037 weight 0)"
+    result["provenance"] = _provenance()
     out = json.dumps(result, indent=2, ensure_ascii=False)
     if args.output == "-":
         print(out)

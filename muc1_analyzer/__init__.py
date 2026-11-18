@@ -1,13 +1,14 @@
-"""MUC1_Score — two-axis genetic prognostic score for ADTKD-MUC1.
+"""MUC1_Analyzer — long-read MUC1 VNTR analysis and the MUC1_Score for ADTKD-MUC1.
 
-Canonical model (manuscript M1): ONSET ← frameshift position, SEVERITY ← rs4072037 splice of the mutant
-allele. See docs/ROADMAP_MUC1_score.md. The legacy additive composite (`score.py`, DEL/rs4072037 weight 0)
-is dev-only and imported LAZILY — the public build ships the two-axis (no DEL, no methylation).
+MUC1_Score (since 2026-08-31): ONE axis, the frameshift tail (repeats downstream of the variant on the
+mutant allele) placed on the calibration cohort's Gaussian → percentile + four categories
+(`fs_tail_score`). rs4072037 is informational only. The former two-axis fields are still emitted for
+backward compatibility. The legacy additive composite (`score.py`) is dev-only and imported LAZILY.
 """
 from .clinical_call import parse_clinical_call, score_call, score_from_fields
 
 __all__ = ["parse_clinical_call", "score_call", "score_from_fields"]
-__version__ = "0.1.0"
+__version__ = "1.0.1"
 
 
 def __getattr__(name):

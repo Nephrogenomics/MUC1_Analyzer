@@ -3,36 +3,34 @@
 Long-read resolution of the **MUC1** coding VNTR for ADTKD-*MUC1*, from Oxford Nanopore or PacBio
 reads (LR-PCR, adaptive sampling, or WGS). It calls the two VNTR haplotypes, decodes the repeat-motif
 structure, detects the pathogenic frameshift (canonical **59dupC** and non-canonical variants), and
-computes the **`MUC1_Score`** for genotype–phenotype work.
+computes the **`MUC1_Score`** (frameshift-tail length) for genotype–phenotype work.
 
-> Inputs: uBAM / BAM / CRAM / FASTQ · ONT or PacBio HiFi · PCR, adaptive-sampling, or WGS depth.
+> Inputs: FASTQ or unaligned BAM (uBAM) · ONT or PacBio HiFi · PCR, adaptive-sampling, or WGS depth.
 > The coding VNTR is GC-rich and collapses on GRCh38, so length/structure are resolved on a
 > **synthetic multi-contig reference** (one contig = one VNTR length) built from **T2T-CHM13**.
 
-## The `MUC1_Score`
+## The `MUC1_Score` — one axis, the frameshift tail
 
-The score is a **single axis: the frameshift tail**, the number of VNTR repeats lying downstream of the
-causal variant on the mutant allele — the length of sequence translated in the toxic reading frame as
-MUC1fs neoprotein.
+The score depends on one quantity: the **frameshift tail**, the number of VNTR repeats downstream of
+the pathogenic variant on the mutant allele (`fs_tail = mut_len − position`). A longer tail carries more
+of the MUC1fs neoprotein; in the phenotyped calibration cohort it is associated with earlier kidney
+failure. The tail is placed on a Gaussian fitted to that cohort (n = 33, μ = 36.9, σ = 14.1 repeats) and
+reported as a z-score, a percentile and one of four categories:
 
-```
-fs_tail = L_mut − position        (repeats, a COUNT — not a fraction of the allele)
-```
+| Percentile | Category |
+|---|---|
+| < 10th | very mild |
+| 10th – 50th | mild |
+| 50th – 90th | severe |
+| > 90th | very severe |
 
-The tail is placed on a Gaussian fitted to the phenotyped cohort (μ = 36.94, σ = 14.07, n = 33) and
-reported as a percentile plus one of four categories: *very mild · mild · severe · very severe*.
-A longer tail means more toxic protein and earlier, faster disease.
-
-**`rs4072037` is reported for information only and is NOT part of the score.** It has no independent
-prognostic value: its apparent association with severity is a redundant proxy of VNTR allele length and
-vanishes once length or tail is entered in the model. It is still genotyped and shown, because it is
-mechanistically informative about exon 2 splicing.
-
-The **VNTR ratio** (mutant / normal allele length) is reported alongside as a descriptor — which allele
-is short, which is long, which carries the variant.
-
-> Single-axis since 2026-08. Earlier releases reported two axes, an onset index and an rs4072037-based
-> severity axis; the JSON still emits `onset_index` and `severity_score` as `null` for compatibility.
+- **rs4072037** (base on the mutant allele) is reported **for information only**: it has no independent
+  prognostic value in our cohort and carries no weight in the score.
+- The two **allele lengths** (and their ratio) are reported as descriptors.
+- A non-carrier, or a carrier whose variant position could not be measured, gets **no score**.
+- The categories place a sample relative to a small calibration cohort; they are not an individual
+  prediction. The legacy fields `onset_index` / `severity_score` are still written to the JSON for
+  backward compatibility and do not drive the verdict.
 
 ## Install
 
@@ -42,7 +40,8 @@ conda env create -f environment.yml && conda activate muc1        # pins python 
 python -m muc1_analyzer --help                                     # sanity: list the subcommands
 ```
 
-External tools on `PATH`: **samtools** and **minimap2**. Optional: `reportlab` for the PDF report.
+External tools on `PATH`: **samtools** and **minimap2**. `reportlab` is needed for the PDF report: without it
+the run still writes its JSON/FASTA outputs, warns at start-up and states that no PDF was written.
 
 ## Quickstart
 
@@ -53,22 +52,43 @@ reference, calls the haplotypes and scores the result:
 python -m muc1_analyzer run -i reads.fastq.gz -r MUC1_fakedVNTR1to150revcomplKirby.fa -s SAMPLE -o out/
 ```
 
-`-i` accepts **FASTQ, uBAM, or an aligned BAM/CRAM** (GRCh38 or T2T) — the input type and reference
-are detected automatically, and an input already aligned to the VNTR reference is reused as-is. The
-**sequencing platform is auto-detected from the read names** (PacBio `…/ccs` → `minimap2 map-hifi`,
-ONT UUID → `map-ont`), so you rarely need `--pacbio`/`--ont`; pass one to override. `--ref genome.fa`
-is needed only to read a CRAM.
+`-i` accepts **FASTQ or an unaligned BAM (uBAM)** only. An aligned BAM/CRAM is refused (since v1.0.1)
+with the command that extracts the MUC1 reads from it (see *Good practice* below). The **sequencing
+platform is auto-detected from the read names** (PacBio `…/ccs` → `minimap2 map-hifi`, ONT UUID →
+`map-ont`), so you rarely need `--pacbio`/`--ont`; pass one to override. Declaring the data type with
+`--input-type pcr-ont | pcr-pacbio | as-ont | targeted-pacbio | wgs-ont | wgs-pacbio` skips the
+auto-detection.
 
-`prepare` adapts to the input **automatically** — you rarely need these flags, but they exist:
-
-| Situation | What `prepare` does (flag) |
-|---|---|
-| **LR-PCR amplicon** | Applies frozen minimap2 chaining flags (`-z 600,200 -r 2000,20000`) so a VNTR-spanning amplicon read chains across the tandem instead of fragmenting. **Auto-enabled** when the locus is amplicon-scale (≥ 2000 reads that actually *align* to the VNTR reference); force with `--pcr`, disable auto-detection with `--no-pcr-autodetect`. |
-| **hg38-aligned BAM/CRAM** | **`--recover-unmapped` is ON by default**: GRCh38 collapses the coding VNTR, so VNTR-heavy reads are flagged *unmapped* and a plain window fetch misses them; they are pulled back and re-aligned (validated up to ~35×, e.g. 264 → 9324 reads). Disable with `--no-recover-unmapped`. |
-| **T2T-CHM13 input** (full-genome or CRAM) | Restricted to the MUC1 VNTR window like an hg38 input (no whole-run over-selection). T2T represents the VNTR faithfully, so recover-unmapped is low-yield there (harmless). |
+LR-PCR amplicons are recognised automatically: frozen minimap2 chaining flags (`-z 600,200
+-r 2000,20000`) are applied so a VNTR-spanning amplicon read chains across the tandem instead of
+fragmenting (auto-enabled when ≥ 2000 reads align to the VNTR reference; force with `--pcr`, disable
+with `--no-pcr-autodetect`).
 
 Outputs in `out/`: `SAMPLE.vntr.bam` (reads on the VNTR reference), `SAMPLE.analyzer.json`
 (haplotypes, motif nomenclature, frameshift), `SAMPLE.score.json` (the `MUC1_Score`).
+
+### Good practice
+
+- **Adaptive sampling and WGS: give the reads of the locus as FASTQ or uBAM** and declare the input type.
+  From an aligned BAM/CRAM, extract them first (a uBAM keeps the MM/ML methylation tags, and
+  `samtools fastq -T MM,ML` does too):
+
+  ```bash
+  samtools view -T GRCh38.fa -b -F 0x904 sample.cram chr1:155180000-155200000 \
+    | samtools fastq -T MM,ML - > sample.MUC1.fq
+  python -m muc1_analyzer run -i sample.MUC1.fq -r MUC1_fakedVNTR1to150revcomplKirby.fa \
+    --input-type wgs-ont -s SAMPLE -o out/          # or --input-type as-ont
+  ```
+- **Read allele lengths from the arbiter** (`arbiter_length` in `analyzer.json`, the "reliable numbers"
+  block of the report), never from the number of reads per contig in a BAM aligned to the 150-contig
+  reference. A read that does not span the VNTR aligns almost equally well to every length and lands on
+  an arbitrary contig (MAPQ 0), so the busiest contigs are not the alleles.
+- **`⚠ LENGTH UNRELIABLE`** (top contig < 20 reads, or a flat smear): since v1.0.1 the per-haplotype motif
+  nomenclature is withheld in the PDF unless the variant caller is positive, because a consensus built on
+  non-spanning reads is not a haplotype. The read concentration on the two busiest contigs is printed
+  next to the warning.
+- **Which version produced a result**: every JSON carries a `provenance` block (`version`, git `commit`)
+  and the PDF prints it in its footer. Quote it when reporting an issue.
 
 ### What `call` reports — end to end, no extra command
 
@@ -102,7 +122,7 @@ python -m muc1_analyzer score --analyzer-json /tmp/demo/DEMO.json --snp-genotype
 | `run` | the whole pipeline: `prepare` → `call` → `score` |
 | `prepare` | any input → BAM on the VNTR reference (extract + align; methylation tags preserved) |
 | `call` | VNTR haplotype caller: the reliable **arbiter length** + **rs4072037** (VNTR-native) + technology/amplicon up front, then motif nomenclature + frameshift |
-| `score` | the `MUC1_Score` (frameshift tail) |
+| `score` | the `MUC1_Score` (frameshift tail on the cohort curve) |
 | `bundle` | per-haplotype BAM + reference + GFF3 for IGV visual review |
 
 `python -m muc1_analyzer <subcommand> --help` for the options of each.
@@ -119,7 +139,7 @@ python -m muc1_analyzer score --analyzer-json PATIENT.json --snp-genotype 1
 python -m muc1_analyzer score \
     --clinical-call "64 repeats | 80 repeats (del8_27 @ repeat 37)" \
     --rs4072037-mut C
-#   -> fs_tail (repeats), percentile, category, ratio; rs4072037 is reported but not scored
+#   -> fs_tail, percentile, category; rs4072037 reported for information; provenance tagged
 ```
 
 `--clinical-call` parses the lab nomenclature: the parenthetical `(variant @ repeat N)` marks the mutant
@@ -133,7 +153,7 @@ Not shipped (too large) — reference externally, or regenerate the VNTR referen
 - **T2T-CHM13v2.0** (VNTR reference source): NCBI `GCA_009914755.4`.
 - **GRCh38** — *not required*. rs4072037 (`chr1:155,192,276`, C/T) is genotyped directly on the VNTR
   reference: the 150 contigs share an identical 5′ flank, so the SNP sits at a fixed offset and is read
-  off the same alignment. A GRCh38 build is only needed to read a CRAM input (`--ref`).
+  off the same alignment. No genome build is needed by the pipeline itself.
 - Rebuild the shipped VNTR reference: `python -m muc1_analyzer.build_vntr_ref --genome chm13v2.0.fa --region <MUC1 array>`.
   The pre-built reference (`MUC1_fakedVNTR1to150revcomplKirby.fa` + `.gff3` for IGV) is included.
 
@@ -162,10 +182,10 @@ A small **synthetic demo PoN** (`pon_results/pon_dupc_demo.json`, no data) is al
 format example. To build your own: per-sample profiles → `muc1_analyzer.detectors.dupc_pon`
 aggregation (see the tutorial), then `python verify_pon.py your_pon.json` before sharing it.
 
-## Phasing rs4072037 with the mutant allele (preferred, not required)
+## Phasing rs4072037 with the mutant allele (informational)
 
-rs4072037 is reported **on the mutant allele**, not just as a genotype — it is not scored, but the mutant-allele base is what is mechanistically interesting. Three ways, in
-decreasing order of directness:
+The rs4072037 base reported with the score is the base **on the mutant allele**, not just the genotype.
+It does not change the score. Three ways to obtain it, in decreasing order of directness:
 
 1. **Observed directly** — `--rs4072037-mut C|T` when the base has been read off the mutant allele
    (visual review, dRNA-seq). Highest precedence.
@@ -184,7 +204,7 @@ decreasing order of directness:
    with the short VNTR in ~94% of alleles). Homozygotes are unambiguous; a heterozygote whose two
    alleles are the same length has no cis handle and is left unresolved rather than guessed.
 
-The score records which of the three was used (`splice_source`), so an inferred severity is never
+The output records which of the three was used (`splice_source`), so an inferred base is never
 silently reported as an observed one.
 
 ## Components
@@ -194,13 +214,13 @@ silently reported as an observed one.
 | `muc1_analyzer/caller.py` (`… call`) | VNTR haplotype caller: per-contig read counts (= length), 2-haplotype consensus, motif nomenclature, indel/frameshift detection. Text / JSON / FASTA / PDF output. |
 | `vntr_raw_length.py` | alignment-free VNTR length arbiter (flank-anchored on the read sequence; robust to tandem collapse). |
 | `Bam_cleaner.py` | upstream span/soft-clip read filter (handles CRAM). |
-| `muc1_analyzer/clinical_call`, `fs_tail_score` | the score: frameshift tail = `L_mut − position`, on the calibrated Gaussian. |
+| `muc1_analyzer/clinical_call`, `fs_tail_score` | the `MUC1_Score`: frameshift tail on the calibration Gaussian, four categories (`haplotype_score` keeps the legacy fields). |
 | `muc1_analyzer/dupc_caller` + `dupc_dispatch` + `dupc_pon`/`dupc_prior`/`dupc_power` + `pcr_dupc`/`pcr_variant` | statistical frameshift caller (PoN null → binomial test → Bayesian posterior), routed by locus depth (PCR vs AS/WGS). |
 | `muc1_analyzer/detectors/{vntr, splice_snp, vntr_dupc, vntr_scaffold, vntr_segment}` | VNTR length/motifs; rs4072037 genotyping; targeted dupC/segment probes. |
 | `muc1_analyzer/build_vntr_ref` | (re)generate the multi-contig VNTR reference + GFF3 from a genome. |
-| `muc1_analyzer/prepare` (`… prepare`) | universal input → VNTR-reference BAM: auto-detects FASTQ/uBAM/hg38/T2T, preserves MM/ML methylation tags, bypasses an input already aligned. |
+| `muc1_analyzer/prepare` (`… prepare`) | FASTQ/uBAM → VNTR-reference BAM, preserving MM/ML methylation tags. |
 | `verify_pon.py` | check a PoN is aggregate-only (no per-sample data) before sharing it. |
-| `phase_fs_snp.py` | single-molecule phasing of rs4072037 with the VNTR allele (observed, reported not scored). |
+| `phase_fs_snp.py` | single-molecule phasing of rs4072037 with the VNTR allele (informational base of the mutant allele). |
 | `muc1_analyzer/review_bundle` | per-haplotype BAM + reference + GFF3 for **IGV visual review** of a variant. |
 
 ## Method note (MAPQ 0)

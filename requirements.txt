@@ -1,4 +1,4 @@
-# MUC1_Analyzer — Python dependencies (public two-axis build).
+# MUC1_Analyzer — Python dependencies (public build). Python >= 3.9.
 # External tools required on PATH: samtools, minimap2  (see environment.yml for a pinned conda env).
 pysam>=0.21
 mappy>=2.24
@@ -6,7 +6,8 @@ numpy>=1.24
 pandas>=2.0
 scipy>=1.10
 openpyxl>=3.1        # haplotype_score cohort table (xlsx)
-reportlab>=3.6       # optional: muc1_analyzer call --pdf report
+reportlab>=3.6,<5; python_version < "3.10"   # PDF report; reportlab 5 refuses Python 3.9 at import
+reportlab>=3.6; python_version >= "3.10"     # PDF report
 pyabpoa>=1.4         # optional: POA consensus in detectors/vntr_scaffold (dense low-depth
                      # realignment). Lazy import — without it that path raises a clear error
                      # instead of failing at load, but the feature is unavailable.

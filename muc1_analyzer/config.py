@@ -136,11 +136,9 @@ PCR_MINIMAP_PROFILES = {
                        "note": "MUC1 SCORING + our chaining — isolates the anti-slide bias from -z/-r"},
 }
 
-# Deprecated profile names that must keep resolving — to the CORRECT set, with a warning, never a silent
-# fallback. `xavier` was the working name of the MUC1 production LR-PCR set before it was renamed `muc1`
-# (2026-08); a stale caller passing `xavier` therefore ran the shipped `setB` (platform preset, i.e. HiFi
-# aligned as map-ont) with no message. Map it to `muc1` and warn instead.
-PCR_MINIMAP_PROFILE_ALIASES = {"xavier": "muc1", "xavier_scoring": "muc1_scoring"}
+# No profile aliases since v1.0.1: the former working name of the `muc1` set was removed. An unknown name
+# still RAISES (never a silent fallback to another set).
+PCR_MINIMAP_PROFILE_ALIASES: dict = {}
 
 
 def resolve_pcr_profile(name):
@@ -148,7 +146,7 @@ def resolve_pcr_profile(name):
 
     A deprecated alias resolves to its new name with a stderr warning; an UNKNOWN name RAISES
     ValueError rather than silently falling back to a default — a stale or mistyped profile must never
-    run degraded without notice (the whole point of this function; see the `xavier`→`muc1` rename)."""
+    run degraded without notice (the whole point of this function)."""
     import sys
     canonical = PCR_MINIMAP_PROFILE_ALIASES.get(name, name)
     if canonical != name:

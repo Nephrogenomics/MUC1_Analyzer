@@ -4,15 +4,15 @@ sequences at the BASE level.
 
 WHY (the length arbiter alone is not enough). Two allele lengths that differ by ≥2 copies are two alleles
 outright — a single allele's flank-length measurement does not scatter by 2. The ambiguous case is Δ≤1:
-either two genuine alleles that happen to sit 0–1 copy apart (a 43|44 pair), or ONE allele whose measured
-length scatters over adjacent bins (a length-homozygote, 44|44). Length cannot separate these; the
+either two genuine alleles that happen to sit 0–1 copy apart (KCH 43|44), or ONE allele whose measured
+length scatters over adjacent bins (a length-homozygote, GAU 44|44). Length cannot separate these; the
 SEQUENCE can. Two distinct MUC1 alleles carry several base differences along the array, whereas one allele
 split by measurement noise gives ~identical consensuses.
 
 Method (the user's, at the BASE level rather than the motif level — a motif call can flip on a single
 artefactual SNP, whereas a ≥3-base-difference threshold is robust to that):
   1. group the reads by measured length;
-  2. align each group to ITS OWN length-contig (xavier) and build a majority consensus (the caller's rule);
+  2. align each group to ITS OWN length-contig (muc1 profile) and build a majority consensus (the caller's rule);
   3. align the two consensuses against EACH OTHER (mappy) — the (L2−L1) extra repeats show up as a clean
      insertion GAP, and true allele differences show up as MISMATCHES outside the gap;
   4. count mismatches outside indels; ≥ min_diff ⇒ two distinct alleles, else one (homozygous / noise split).
@@ -29,7 +29,7 @@ import mappy
 
 import vntr_raw_length as V
 
-XAVIER_KW = dict(preset="lr:hq", scoring=[2, 1, 10, 50, 10, 50],
+MUC1_PROFILE_KW = dict(preset="lr:hq", scoring=[2, 1, 10, 50, 10, 50],
                  bw=200, bw_long=7000, best_n=1, min_chain_score=100)
 
 
@@ -45,9 +45,9 @@ def _extract_contig(ref, name, out_fa):
 
 
 def _align_group_to_contig(reads, names, contig_fa, out_bam):
-    """Align each named read (reads[name]=seq or (seq,qual)) to the single contig in contig_fa (xavier),
+    """Align each named read (reads[name]=seq or (seq,qual)) to the single contig in contig_fa (muc1 profile),
     write a sorted+indexed BAM. Returns the contig name."""
-    al = mappy.Aligner(contig_fa, **XAVIER_KW)
+    al = mappy.Aligner(contig_fa, **MUC1_PROFILE_KW)
     if not al:
         raise RuntimeError(f"mappy failed to index {contig_fa}")
     ctg = al.seq_names[0]

@@ -819,7 +819,7 @@ def write_merged_pdf(path, sample, frag, score, haps, rel_dupc=None, rs_detected
                         "note": f"read off the mutant allele (C:{rs_detected.get('C')} / "
                                 f"T:{rs_detected.get('T')}, depth {rs_detected.get('depth')})"}
         try:
-            write_pdf_report(results, path, sample=sample, dupc={"result": rel_dupc} if rel_dupc else None,
+            _ok = write_pdf_report(results, path, sample=sample, dupc={"result": rel_dupc} if rel_dupc else None,
                              rs4072037=rs_block,
                              clinical_call=clinical_string(frag, haps),
                              onset_index=score.get("onset_index"),
@@ -828,7 +828,11 @@ def write_merged_pdf(path, sample, frag, score, haps, rel_dupc=None, rs_detected
                              score=score, rs_alert=rs_alert)
             if rs_alert:
                 print(f"[cigar-len] {rs_alert}", file=sys.stderr)
-            return path
+            if _ok and os.path.exists(path):
+                return path
+            print(f"[cigar-len] ERROR: merged PDF NOT written ({path}) — reportlab is missing "
+                  f"(pip install reportlab). JSON outputs are unaffected.", file=sys.stderr)
+            return None
         except Exception as e:
             print(f"[cigar-len] shared renderer failed ({e}) — falling back to the legacy writer",
                   file=sys.stderr)
@@ -1306,7 +1310,7 @@ def resolve_rs4072037(provided, detected):
 
 
 def assemble_score(haps, sample, outdir, rs4072037=None):
-    """Merge the per-allele top haplotypes → the project's own two-axis MUC1_Score. Returns
+    """Merge the per-allele top haplotypes → the MUC1_Score (frameshift tail; legacy two-axis fields kept). Returns
     (merged_json_path, fragments, score) using detectors.vntr + clinical_call (lazy import)."""
     from muc1_analyzer.detectors import vntr as VD
     from muc1_analyzer.clinical_call import score_from_fields
@@ -1320,9 +1324,47 @@ def assemble_score(haps, sample, outdir, rs4072037=None):
 
 
 # ── main ─────────────────────────────────────────────────────────────────────────
+def failed_calls(results):
+    """The per-allele `call` results that did not succeed → [{tag, rc}]. Pure.
+
+    A non-zero return code is a failure. So is a missing analyzer JSON: the subprocess can exit 0 and
+    still have written nothing, and the run must not go on to a verdict from the other allele alone."""
+    out = []
+    for r in results:
+        rc = r.get("rc")
+        b = r.get("bin") or {}
+        js = b.get("analyzer_json")
+        if rc not in (0, None) or (js and not os.path.exists(js)):
+            out.append({"tag": b.get("tag") or r.get("cname"), "rc": rc,
+                        "analyzer_json_missing": bool(js and not os.path.exists(js))})
+    return out
+
+
+def _provenance():
+    try:
+        from muc1_analyzer.provenance import provenance
+        return provenance()
+    except Exception:
+        return None
+
+
+def _reportlab_problem():
+    """None when reportlab imports, else the first line of the ImportError (e.g. reportlab >= 5 on 3.9)."""
+    try:
+        import reportlab  # noqa: F401
+        return None
+    except ImportError as e:
+        return str(e).splitlines()[0] if str(e) else "not installed"
+
+
+def _abspath(p):
+    """User path → absolute (with ~ expanded). Pure; the subprocess runs from REPO_ROOT, not from the caller's cwd."""
+    return os.path.abspath(os.path.expanduser(p))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Alignment-first VNTR caller (length → per-allele call + score).")
-    ap.add_argument("-b", "--bam", required=True, help="reads: fastq(.gz), uBAM, or any BAM/CRAM (seq only)")
+    ap.add_argument("-b", "--bam", required=True, help="reads: fastq(.gz) or unaligned BAM (uBAM)")
     ap.add_argument("-r", "--ref", required=True, help="multi-contig faked VNTR reference (MUC1_VNTR_Nrepeats)")
     ap.add_argument("-s", "--sample", default="sample")
     ap.add_argument("-o", "--outdir", default="cigar_out")
@@ -1418,8 +1460,20 @@ def main(argv=None):
                          "(the single-allele PDFs are misleading — a carrier allele's own report omits the dupC)")
     ap.add_argument("--stage1-only", action="store_true", help="stop after the length call (no per-allele call/score)")
     a = ap.parse_args(argv)
+    # The per-allele `muc1_analyzer call` runs as a subprocess with cwd=REPO_ROOT, so EVERY path it receives
+    # must be absolute. A relative -o used to make it write/read the per-allele BAMs under the repository
+    # instead of the user's output folder (FileNotFoundError on a WGS run launched with a relative -o).
+    a.outdir = _abspath(a.outdir)
+    for _attr in ("ref_cram", "genomic_bam", "genome_ref_dupc", "dupc_pon", "clair3_vcf"):
+        if getattr(a, _attr, None):
+            setattr(a, _attr, _abspath(getattr(a, _attr)))
     os.makedirs(a.outdir, exist_ok=True)
     preset = "map-hifi" if a.pacbio else "map-ont"
+    _rl = _reportlab_problem()
+    if _rl:
+        print(f"[cigar-len] WARNING: reportlab cannot be imported ({_rl}) → NO PDF report will be written. "
+              f"Install it with pip install 'reportlab<5' on Python 3.9, pip install reportlab on >= 3.10. "
+              f"The JSON/FASTA outputs are produced normally.", file=sys.stderr)
 
     # Resolve inputs to ABSOLUTE paths up front. The script and its subprocess (`muc1_analyzer call`, run
     # with cwd=REPO_ROOT) must resolve a relative -r / -b the same way; an absolute path removes any
@@ -1428,8 +1482,15 @@ def main(argv=None):
     if not os.path.isfile(a.ref):
         sys.exit(f"[cigar-len] reference not found: {a.ref}\n"
                  f"  → check the -r path is correct and readable from where you launch the script.")
-    if os.path.exists(a.bam):
-        a.bam = os.path.abspath(os.path.expanduser(a.bam))
+    if os.path.exists(os.path.expanduser(a.bam)):
+        a.bam = _abspath(a.bam)
+    try:
+        from muc1_analyzer.input_guard import input_error
+        _err = input_error(a.bam, "from-fastq")
+    except ImportError:
+        _err = None
+    if _err:
+        sys.exit(_err)
     if not os.path.exists(a.ref + ".fai"):                    # index once, next to the reference
         try:
             pysam.faidx(a.ref)
@@ -1471,7 +1532,7 @@ def main(argv=None):
     kind = "HET" if len(alleles) == 2 else ("HOM" if len(alleles) == 1 else "NONE")
     print(f"[cigar-len] alleles ({kind}): {alleles} copies  (SPAN support {support})", file=sys.stderr)
 
-    summary = {"sample": a.sample, "ruler_contig": a.ruler_contig, "tandem": diag,
+    summary = {"sample": a.sample, "provenance": _provenance(), "ruler_contig": a.ruler_contig, "tandem": diag,
                "n_reads": len(reads), "n_aligned": len(records), "n_span": n_span,
                "alleles": alleles, "allele_support": support, "kind": kind,
                "span_histogram": dict(sorted(Counter(span_vals).items())),
@@ -1669,6 +1730,23 @@ def main(argv=None):
                 else:
                     why = ("distinct lengths" if not same_length else f"{nsnp} SNP(s) > {a.min_snp_diff}")
                     print(f"[cigar-len] phased haplotypes kept ({why}) → confirmed heterozygote", file=sys.stderr)
+
+            # A per-allele `call` that FAILED must fail the run. It used to be logged as "call rc=1" and the
+            # pipeline went on: intermediates cleaned, a PDF and a verdict produced from the surviving
+            # allele only — a NEGATIVE that never looked at the other allele. Stop here, keep every
+            # intermediate for diagnosis, and leave a machine-readable FAILED status.
+            failed = failed_calls(results)
+            if failed:
+                summary["status"] = "FAILED"
+                summary["failed_calls"] = failed
+                sjson = os.path.join(a.outdir, f"{a.sample}.cigar.summary.json")
+                json.dump(summary, open(sjson, "w"), indent=2, default=str)
+                for f in failed:
+                    print(f"[cigar-len] ERROR: per-allele call FAILED for {f['tag']} (rc={f['rc']}).",
+                          file=sys.stderr)
+                print(f"[cigar-len] ERROR: run aborted — no PDF, no verdict. Intermediates kept in "
+                      f"{a.outdir} for diagnosis; status written to {sjson}", file=sys.stderr)
+                return 1
 
             for res in results:                                # commit the final haplotype set
                 if res["hap"] is not None:

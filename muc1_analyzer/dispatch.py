@@ -1,9 +1,9 @@
 """`python -m muc1_analyzer <subcommand>` — the single entry point of the tool.
 
     run       full pipeline: prepare → call → score        (the beginner one-liner)
-    prepare   any input → BAM aligned on the VNTR reference (extract + align)
+    prepare   FASTQ / uBAM → BAM aligned on the VNTR reference
     call      VNTR haplotype caller (length, motifs, frameshifts incl. dupC)
-    score     two-axis MUC1_Score (onset ← frameshift position, severity ← rs4072037 splice)
+    score     MUC1_Score (frameshift tail on the cohort curve; rs4072037 informational)
     bundle    IGV review bundle
 
 Sub-parsers are NOT declared here: each subcommand owns its own argparse and is imported
@@ -27,9 +27,9 @@ MUC1_Analyzer — MUC1 VNTR analysis for ADTKD-MUC1 (long reads).
 subcommands:
   run       full pipeline (prepare -> call -> score) — start here
   run_pcr   PCR-FASTQ pipeline with the validated frameshift detector (Se/Sp=1.000)
-  prepare   any input (fastq / uBAM / hg38 / T2T) -> BAM on the VNTR reference
+  prepare   FASTQ / uBAM -> BAM on the VNTR reference
   call      VNTR haplotype caller: length, motifs, frameshifts (incl. 59dupC)
-  score     two-axis MUC1_Score (onset = frameshift position, severity = rs4072037 splice)
+  score     MUC1_Score (frameshift tail on the cohort curve; rs4072037 informational)
   bundle    IGV review bundle
 
   python -m muc1_analyzer <subcommand> --help   for the options of one subcommand
@@ -214,7 +214,7 @@ def _cmd_run(argv) -> int:
     ap = argparse.ArgumentParser(
         prog="muc1_analyzer run",
         description="Full pipeline on one sample: prepare (extract+align) → call (VNTR "
-                    "haplotypes + frameshift) → score (two-axis MUC1_Score).")
+                    "haplotypes + frameshift) → score (MUC1_Score, frameshift tail).")
     ap.add_argument("-i", "--input", required=True,
                     help="fastq(.gz) | uBAM | aligned BAM/CRAM (hg38 or T2T)")
     ap.add_argument("-r", "--vntr-ref", dest="vntr_ref", required=True,
@@ -235,6 +235,9 @@ def _cmd_run(argv) -> int:
                     help="(DEFAULT for aligned inputs) recover the unplaced VNTR reads (thin-locus rescue, ~35x)")
     ap.add_argument("--no-recover-unmapped", action="store_true",
                     help="disable the default unplaced-read recovery on an aligned input")
+    ap.add_argument("--recover-min-len", type=int, default=2000,
+                    help="minimum length (bp) of a recovered unplaced read (default 2000); shorter reads "
+                         "cannot span the VNTR and only smear the length-contigs")
     ap.add_argument("--copy-offset", type=int, default=None,
                     help="flank→physical copy offset (default 4 ALWAYS: the AL/AH anchors sit ~4 units inside the "
                          "array, so a flank measurement is 4 short — a property of the METHOD, not of the assay)")
@@ -281,7 +284,7 @@ def _cmd_run(argv) -> int:
                          "the reference: 43 min measured on one amplicon). Preset, frozen PCR flags, tag "
                          "carry-through, amplicon signature and strand balance are unchanged.")
     ap.add_argument("--align-profile", dest="align_profile", default="setB",
-                    choices=["setB", "muc1", "muc1_scoring", "xavier"],
+                    choices=["setB", "muc1", "muc1_scoring"],
                     help="LR-PCR minimap2 parameter set. Default `setB` = the shipped frozen chaining "
                          "flags — nothing changes unless another is named. `muc1` = the MUC1 production set "
                          "verbatim (⚠ its -z/-r are TIGHTER than ours and its -N/-p suit a single-locus "
@@ -295,7 +298,16 @@ def _cmd_run(argv) -> int:
     ap.add_argument("--rs4072037-mut", dest="rs4072037_mut", choices=["C", "T"], default=None,
                     help="observed rs4072037 base of the MUTANT allele (severity axis); "
                          "otherwise genotyped from the alignment when possible")
+    ap.add_argument("--allow-aligned-input", action="store_true", help=argparse.SUPPRESS)
     args = ap.parse_args(argv)
+
+    # Input policy (v1.0.1): FASTQ or uBAM only. `--allow-aligned-input` is a hidden switch kept for the
+    # validation harnesses that replay pre-aligned BAMs; it is not part of the supported interface.
+    from .input_guard import input_error
+    _err = input_error(args.input, "run", allow_aligned=args.allow_aligned_input)
+    if _err:
+        print(_err, file=sys.stderr)
+        return 2
 
     os.makedirs(args.outdir, exist_ok=True)
     base = os.path.join(args.outdir, args.sample)
@@ -383,7 +395,8 @@ def _cmd_run(argv) -> int:
                   no_pcr_autodetect=_prep["no_pcr_autodetect"],
                   recover_unmapped=not args.no_recover_unmapped, sample=args.sample, workdir=args.outdir,
                   pcr_cap=args.pcr_cap, two_stage=getattr(args, 'two_stage', False),
-                  align_profile=getattr(args, 'align_profile', 'setB'))
+                  align_profile=getattr(args, 'align_profile', 'setB'),
+                  recover_min_len=getattr(args, 'recover_min_len', 2000))
 
     # ── 1a. ROUTE + cross-check the length with a SECOND, independent method ────────────────────────
     # The fork is `is_amplicon` x `our flanks present`, not simply AS vs PCR:

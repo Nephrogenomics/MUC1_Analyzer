@@ -16,9 +16,8 @@ Usage
 -----
     python -m muc1_analyzer.run_pcr -i reads.fastq.gz -r MUC1_fakedVNTR1to150revcomplKirby.fa -s SAMPLE -o out/
 
-    # already VNTR-aligned BAM (e.g. an existing xavier_bams/*.bam) -> prepare bypasses alignment,
-    # which isolates the DETECTOR-in-pipeline from the alignment step during validation:
-    python -m muc1_analyzer.run_pcr -i SAMPLE.xavier.bam -r MUC1_fakedVNTR1to150revcomplKirby.fa -s SAMPLE -o out/
+    # Input: FASTQ or unaligned BAM only (v1.0.1). A validation harness replaying an already
+    # VNTR-aligned BAM (prepare then bypasses alignment) passes the hidden --allow-aligned-input.
 """
 from __future__ import annotations
 
@@ -49,9 +48,9 @@ def _cmd_run_pcr(argv=None) -> int:
     ap = argparse.ArgumentParser(
         prog="muc1_analyzer run_pcr",
         description="PCR-FASTQ pipeline: prepare (MUC1 profile) -> frameshift detector (validated) -> call "
-                    "(consensus + naming) -> two-axis MUC1_Score. Standalone; does not modify `run`.")
+                    "(consensus + naming) -> MUC1_Score (frameshift tail).")
     ap.add_argument("-i", "--input", required=True,
-                    help="LR-PCR amplicon FASTQ(.gz) / uBAM, or an already VNTR-aligned BAM (prepare bypasses)")
+                    help="LR-PCR amplicon reads: FASTQ(.gz) or unaligned BAM (uBAM)")
     ap.add_argument("-r", "--vntr-ref", dest="vntr_ref", required=True,
                     help="multi-contig VNTR reference FASTA (…Kirby.fa)")
     ap.add_argument("-o", "--outdir", default="muc1_out", help="output directory")
@@ -60,7 +59,7 @@ def _cmd_run_pcr(argv=None) -> int:
                          "(so outputs are not all named sample.*)")
     ap.add_argument("--threads", type=int, default=8)
     ap.add_argument("--align-profile", dest="align_profile", default="muc1",
-                    choices=["setB", "muc1", "muc1_scoring", "xavier"],
+                    choices=["setB", "muc1", "muc1_scoring"],
                     help="LR-PCR minimap2 parameter set for `prepare`. Default `muc1` — the profile the "
                          "frameshift detector was VALIDATED on. Change only to price an "
                          "alternative against the clinical truth table.")
@@ -74,7 +73,13 @@ def _cmd_run_pcr(argv=None) -> int:
     ap.add_argument("--rs4072037-mut", dest="rs4072037_mut", choices=["C", "T"], default=None,
                     help="observed rs4072037 base of the MUTANT allele (severity axis); otherwise genotyped "
                          "T2T-natively on the VNTR-ref BAM")
+    ap.add_argument("--allow-aligned-input", action="store_true", help=argparse.SUPPRESS)
     args = ap.parse_args(argv)
+    from .input_guard import input_error
+    _err = input_error(args.input, "run_pcr", allow_aligned=args.allow_aligned_input)
+    if _err:
+        print(_err, file=sys.stderr)
+        return 2
     if not args.sample:
         args.sample = _sample_from_input(args.input)
 
@@ -82,8 +87,8 @@ def _cmd_run_pcr(argv=None) -> int:
     base = os.path.join(args.outdir, args.sample)
 
     # ── 1. prepare — any input -> a BAM aligned on the VNTR reference (MUC1 PCR profile) ────────────
-    # An input that is ALREADY on the VNTR target is returned as-is (no realignment), so passing an
-    # existing xavier_bams/*.bam validates the DETECTOR-in-pipeline in isolation from the alignment.
+    # An input that is ALREADY on the VNTR target is returned as-is (no realignment): with the hidden
+    # --allow-aligned-input this validates the DETECTOR-in-pipeline in isolation from the alignment.
     from .prepare import prepare
     print("[run_pcr] step 1/4 — prepare (align on VNTR ref)", file=sys.stderr)
     bam = prepare(args.input, args.vntr_ref, base + ".vntr.bam",
@@ -133,7 +138,7 @@ def _cmd_run_pcr(argv=None) -> int:
         return rc or 1
 
     # Index the consensus FASTA (one sequence per resolved haplotype length — a single one on a
-    # length-homozygote, two on a length-heterozygote). `--fasta-consensus` writes the FASTA
+    # length-homozygote such as GAU, two on a length-heterozygote). `--fasta-consensus` writes the FASTA
     # but not its .fai; downstream tools (and IGV) want the index.
     try:
         import pysam
@@ -153,7 +158,7 @@ def _cmd_run_pcr(argv=None) -> int:
     else:
         print("[run_pcr] ribbon figure skipped (no haplotypes or matplotlib unavailable)", file=sys.stderr)
 
-    # ── 4. score — two-axis MUC1_Score ───────────────────────────────────────────────────────────────
+    # ── 4. score — MUC1_Score (frameshift tail) ───────────────────────────────────────────────────────────────
     print("[run_pcr] step 4/4 — score", file=sys.stderr)
     score_argv = ["--analyzer-json", call_json, "-s", args.sample, "-o", base + ".score.json"]
     if lengths:

@@ -1,6 +1,6 @@
 """Per-haplotype VISUAL REVIEW bundle + feature capture for a future classifier.
 
-Goal (Ilias/Xavier spec): for each patient, produce what is needed to ADJUDICATE BY EYE a
+Goal (clinical review spec): for each patient, produce what is needed to ADJUDICATE BY EYE a
 suspected frameshift, and — at the same time — accumulate a labelled training set.
 
 Per patient, for EACH haplotype (HP1/HP2):

@@ -1,7 +1,7 @@
 # MUC1_Analyzer — tutorial
 
 From a runnable synthetic quickstart (no patient data) to the real-data workflow and the
-`MUC1_Score`. Pair with the [README](../README.md).
+`MUC1_Score` (frameshift tail). Pair with the [README](../README.md).
 
 External tools on `PATH`: **samtools**, **minimap2** (see `environment.yml`).
 
@@ -18,35 +18,40 @@ python make_synthetic_muc1.py /tmp/demo               # -> /tmp/demo/vntr_ref.fa
 python -m muc1_analyzer call -b /tmp/demo/synthetic.bam -r /tmp/demo/vntr_ref.fa -s DEMO --min-mq 0 \
     --json /tmp/demo/DEMO.json --pdf /tmp/demo/DEMO.pdf     # text + JSON + PDF report
 
-# (c) MUC1_Score (frameshift tail) from the analyzer output
+# (c) MUC1_Score from the analyzer output
 python -m muc1_analyzer score --analyzer-json /tmp/demo/DEMO.json --snp-genotype 1
 ```
 
-The synthetic reads are pure motif A (no frameshift), so no mutation is called and the frameshift tail is
-empty — that is correct, it just proves the pipeline runs end to end.
+The synthetic reads are pure motif A (no frameshift), so no mutation is called and no score is
+produced (there is no frameshift tail) — that is correct, it just proves the pipeline runs end to end.
 
 ---
 
 ## 2. Real data — detect, then score
 
-**Inputs**: uBAM / BAM / CRAM / FASTQ, ONT or PacBio HiFi, from LR-PCR, adaptive sampling, or WGS.
+**Inputs**: FASTQ or unaligned BAM (uBAM), ONT or PacBio HiFi, from LR-PCR, adaptive sampling, or WGS.
+An aligned BAM/CRAM is refused (v1.0.1): extract the MUC1 reads first (below).
 The MUC1 coding VNTR collapses on GRCh38, so length/structure are resolved by re-aligning the reads to
 the multi-contig VNTR reference (one contig = one length). Chromosome naming (`chr1` / `1` /
 `CM000663.2` / `NC_000001.11`) and genome (hg38 / T2T) are auto-detected.
 
 ```bash
-# everything in one command: extract + align + call + score
-python -m muc1_analyzer run -i input.cram --ref GRCh38.fa \
+# from an aligned BAM/CRAM: extract the MUC1 window (GRCh38) as FASTQ, keeping the methylation tags
+samtools view -b -F 0x904 -T GRCh38.fa input.cram chr1:155180000-155200000 \
+    | samtools fastq -T MM,ML - > SAMPLE.MUC1.fq
+
+# everything in one command: align + call + score
+python -m muc1_analyzer run -i SAMPLE.MUC1.fq --input-type wgs-ont \
     -r MUC1_fakedVNTR1to150revcomplKirby.fa -s SAMPLE -o out/
-#   --pacbio for HiFi reads (default ONT).  --ref is only needed to READ a CRAM.
+#   --input-type as-ont for adaptive sampling, pcr-ont for an LR-PCR amplicon, *-pacbio for HiFi.
 ```
 
 That is the recommended path. The steps are also available individually, which is what you want when
 you already have an alignment, or when you want to cross-check a length:
 
 ```bash
-# 1) extract + align only (methylation tags MM/ML are preserved)
-python -m muc1_analyzer prepare -i input.cram --ref GRCh38.fa \
+# 1) align only (methylation tags MM/ML are preserved)
+python -m muc1_analyzer prepare -i SAMPLE.MUC1.fq \
     -r MUC1_fakedVNTR1to150revcomplKirby.fa -o muc1.vntr.bam -s SAMPLE
 
 # 2) call haplotypes + motifs + frameshift -> JSON
@@ -56,38 +61,28 @@ python -m muc1_analyzer call -b muc1.vntr.bam -r MUC1_fakedVNTR1to150revcomplKir
 # 3) VNTR length cross-check (alignment-free, robust to collapse)
 python vntr_raw_length.py --bam muc1.vntr.bam --name SAMPLE
 
-# 4) MUC1_Score — frameshift tail (rs4072037 is reported, not scored: --snp-genotype 0/1/2 or --rs4072037-mut C/T)
+# 4) MUC1_Score (frameshift tail; rs4072037 is informational: --snp-genotype 0/1/2 or --rs4072037-mut C/T)
 python -m muc1_analyzer score --analyzer-json SAMPLE.json --snp-genotype 1 -o SAMPLE.score.json
 ```
 
-**On input types.** `prepare` detects FASTQ / uBAM / hg38-aligned / T2T-aligned and reuses an input
-already aligned to the VNTR reference instead of realigning it. An **aligned** input (hg38 or
-full-genome T2T) is restricted to the MUC1 window before re-extraction; a **uBAM or FASTQ is taken
-whole**, so it should already be MUC1-enriched (a targeted uBAM, or reads you extracted at the locus)
-— feeding a whole-run FASTQ aligns *everything* to the VNTR reference and keeps every incidental
-mapper. If your reads are not enriched, align them to a genome first and pass that BAM/CRAM so the
-locus window applies.
+**On input types.** Only FASTQ and uBAM are accepted, and they are taken whole, so they should already
+be MUC1-enriched (an LR-PCR amplicon, a targeted uBAM, or reads extracted at the locus as above).
+Feeding a whole-run FASTQ aligns *everything* to the VNTR reference. Do not read the alleles from the
+number of reads per contig of the VNTR BAM: a read that does not span the VNTR lands on an arbitrary
+length-contig. The lengths come from the alignment-free arbiter.
 
-Three behaviours worth knowing (all automatic):
+Behaviour worth knowing (automatic):
 
-- **`--recover-unmapped` (default ON for aligned inputs).** GRCh38 cannot represent the long coding
-  VNTR, so its VNTR-heavy reads are flagged *unmapped* and a plain window fetch *omits* them.
-  `prepare` pulls them back and re-aligns to the VNTR reference (validated up to ~35×, 264 → 9324
-  reads on an adaptive-sampling CRAM). Disable with `--no-recover-unmapped`. On a **T2T** input the
-  VNTR is represented, so its reads already map inside the window and recovery is low-yield (harmless).
-  *If you have the uBAM, it is still the cleanest source; recover-unmapped brings an hg38 BAM close.*
 - **LR-PCR amplicons (`--pcr`, auto-detected).** A VNTR-spanning amplicon read must chain across the
   whole tandem; the default minimap2 bandwidth fragments it and you lose length discrimination.
   `prepare` applies frozen chaining flags (`-z 600,200 -r 2000,20000`) — **auto-enabled** when the
   locus is amplicon-scale (≥ 2000 reads that actually *align* to the VNTR reference, so a busy
   adaptive-sampling window is not mistaken for an amplicon). Force with `--pcr`, disable auto-detection
   with `--no-pcr-autodetect`.
-- **T2T-CHM13 input.** A full-genome T2T BAM/CRAM (contig `chr1` / `NC_060925.1` / `CP068277.2`) is
-  windowed to the MUC1 array exactly like an hg38 input — no whole-run over-selection.
 
 **On rs4072037.** `run` genotypes it directly on the VNTR-reference alignment — the 150 contigs share
 an identical 5′ flank, so the SNP sits at a fixed offset. No GRCh38 alignment is needed for it. Note
-this is the *genotype*; what is mechanistically interesting is the base on the **mutant** allele (§6).
+this is the *genotype*; the score reports, for information, the base on the **mutant** allele (see §6).
 
 **Manual / visual scoring** — for variants finalized by eye (e.g. `del8_27`, invisible to the automated
 caller) or a coverage-floored heterozygote:
@@ -96,13 +91,12 @@ caller) or a coverage-floored heterozygote:
 python -m muc1_analyzer score \
     --clinical-call "64 repeats | 80 repeats (del8_27 @ repeat 37)" \
     --rs4072037-mut C -s SAMPLE
-#   -> fs_tail (repeats downstream of the variant), percentile, category, ratio; provenance tagged
+#   -> fs_tail (80 − 37 = 43 repeats), percentile, category; rs4072037 informational; provenance tagged
 ```
 
-One axis: the **frameshift tail**, `fs_tail = L_mut − position`, the repeats translated in the toxic
-reading frame. It is placed on a Gaussian calibrated on the phenotyped cohort (mu 36.94, sd 14.07,
-n = 33) and reported as a percentile and one of four categories. **rs4072037 is reported but NOT
-scored** — it carries no independent prognostic value, being a redundant proxy of allele length.
+The score is the frameshift tail placed on the calibration cohort's Gaussian (n = 33): percentile and
+one of four categories (very mild < 10th, mild < 50th, severe ≤ 90th, very severe > 90th). rs4072037 is
+reported for information and carries no weight.
 
 ---
 
@@ -211,11 +205,11 @@ python -m muc1_analyzer.build_vntr_ref --genome chm13v2.0.fa --region <MUC1 arra
 
 ---
 
-## 6. Phasing rs4072037 with the mutant allele (reported, not scored)
+## 6. Phasing rs4072037 with the mutant allele (informational)
 
-What is reported is the splice haplotype **of the mutant allele** — not the genotype. A homozygote is
-unambiguous, but a heterozygote needs the phase. This is preferred but **not required**: without it the
-score falls back to the cis rule and records that it did.
+The rs4072037 base reported with the score is the base **of the mutant allele** — not the genotype. It
+does not change the score. A homozygote is unambiguous, a heterozygote needs the phase; without it the
+output falls back to the cis rule and records that it did.
 
 ```bash
 # single-molecule phasing: group full-length reads by their rs4072037 base, read each
@@ -228,7 +222,7 @@ the whole array, and the frameshift. Requirements: reads that span SNP → VNTR 
 depth **per allele** (LR-PCR qualifies; adaptive sampling often does, but a long allele sampled thin
 will not resolve — the tool reports `resolved: False` rather than guessing).
 
-Precedence, highest first:
+Precedence for the reported base, highest first:
 
 | Source | How | `splice_source` |
 |---|---|---|
@@ -236,8 +230,8 @@ Precedence, highest first:
 | Phased from single molecules | `phase_fs_snp.py` → pass the base via `--rs4072037-mut` | `observed` |
 | Inferred from genotype + cis rule | `--snp-genotype 0\|1\|2` (T is cis with the short VNTR, ~94%) | `inferred(dosage/cis)` |
 
-A length-homozygous heterozygote has no cis handle: the mutant-allele base is left **unset** rather than
-guessed. Check `splice_source` in the output before treating a severity value as observed.
+A length-homozygous heterozygote has no cis handle: the base is left **unset** rather than guessed.
+Check `splice_source` in the output before treating it as observed.
 
 ## Command reference
 
@@ -247,11 +241,11 @@ guessed. Check `splice_source` in the output before treating a severity value as
 | VNTR length only (auto flank/cassette) | `python vntr_raw_length.py --bam B.bam --name S` |
 | Amplicon signature (kind, flanks, product kb, platform) | `python vntr_raw_length.py --bam B.bam --amplicon --name S` |
 | dupC statistical call | `python -m muc1_analyzer.dupc_caller -b B.bam --genome-ref g.fa --pon PON.json --mut-len 8` |
-| Score (auto) | `python -m muc1_analyzer score --analyzer-json S.json --snp-genotype 1` |
-| Score (visual) | `python -m muc1_analyzer score --clinical-call "…(variant @ repeat N)" --rs4072037-mut C` |
+| MUC1_Score (auto) | `python -m muc1_analyzer score --analyzer-json S.json --snp-genotype 1` |
+| MUC1_Score (visual) | `python -m muc1_analyzer score --clinical-call "…(variant @ repeat N)" --rs4072037-mut C` |
 | Phase rs4072037 (single-molecule) | `python phase_fs_snp.py --bam S.chr1.bam --mut-len N --name S` |
 | Full pipeline | `python -m muc1_analyzer run -i input -r vntr_ref.fa -s S -o out/` |
-| Extract + align only | `python -m muc1_analyzer prepare -i input -r vntr_ref.fa -o S.vntr.bam` |
-| Extract, LR-PCR amplicon (usually auto) | `python -m muc1_analyzer prepare -i amplicon.bam -r vntr_ref.fa -o S.vntr.bam --pcr` |
-| Extract, hg38 BAM without unmapped recovery | `python -m muc1_analyzer prepare -i S.hg38.bam --ref g.fa -r vntr_ref.fa -o S.vntr.bam --no-recover-unmapped` |
+| Align only | `python -m muc1_analyzer prepare -i S.MUC1.fq -r vntr_ref.fa -o S.vntr.bam` |
+| Align, LR-PCR amplicon (usually auto) | `python -m muc1_analyzer prepare -i amplicon.fq.gz -r vntr_ref.fa -o S.vntr.bam --pcr` |
+| Extract MUC1 reads from an aligned CRAM | `samtools view -b -F 0x904 -T g.fa S.cram chr1:155180000-155200000 \| samtools fastq -T MM,ML - > S.MUC1.fq` |
 | IGV bundle | `python -m muc1_analyzer.review_bundle --cram S.cram --ref g.fa --vntr-ref vntr_ref.fa --out bundle/` |

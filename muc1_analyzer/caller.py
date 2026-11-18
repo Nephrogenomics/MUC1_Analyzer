@@ -44,6 +44,7 @@ from __future__ import annotations
 import pysam
 import argparse
 import bisect
+import os
 import sys
 import json
 import re
@@ -1386,8 +1387,44 @@ def render_pdf_from_json(analyzer_json: str, pdf_path: str, *, score: dict = Non
                      clinical_call=clinical_call, score=score, rs_alert=rs_alert,
                      onset_index=(score or {}).get("onset_index"),
                      variant_repeat=var.get("repeat"), variant_label=var.get("label"),
-                     carrier_contig=dres.get("carrier_contig"))
+                     carrier_contig=dres.get("carrier_contig"),
+                     concentration=d.get("read_concentration"))
     return pdf_path
+
+
+def hide_nomenclature(length_warning, dupc_result) -> bool:
+    """Withhold the per-haplotype motif nomenclature? Pure. Yes when the length is flagged unreliable
+    (thin top contig or flat smear) AND the variant caller is not POSITIVE. A positive call keeps it so
+    the carrier haplotype can still be shown."""
+    if not length_warning:
+        return False
+    r = dupc_result or {}
+    positive = bool(r.get("called")) or str(r.get("status", "")).lower() == "positive" \
+        or r.get("interpretation") == "CONFIRMED"
+    return not positive
+
+
+def read_concentration(read_counts: dict) -> dict | None:
+    """Share of the reads on the two busiest length-contigs. Pure. A real two-allele sample puts most
+    reads on two contigs; a smear spreads them over many (a low top-2 fraction is the FLAT signature)."""
+    if not read_counts:
+        return None
+    ranked = sorted(read_counts.items(), key=lambda x: x[1], reverse=True)
+    total = sum(c for _, c in ranked)
+    if not total:
+        return None
+    top = ranked[:2]
+    return {"n_reads": total, "n_contigs": len(ranked),
+            "top2_frac": round(sum(c for _, c in top) / total, 3),
+            "top2": [{"contig": c, "reads": n} for c, n in top]}
+
+
+def format_concentration(conc) -> str | None:
+    if not conc:
+        return None
+    tops = ", ".join(f"{t['contig']} ({t['reads']})" for t in conc.get("top2", []))
+    return (f"Read concentration: {conc['top2_frac'] * 100:.0f}% of {conc['n_reads']} reads on the two "
+            f"busiest of {conc['n_contigs']} length-contigs — {tops}")
 
 
 def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict = None,
@@ -1395,7 +1432,8 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
                      dupc: dict = None, congruence: dict = None, clinical_call: str = None,
                      onset_index: float = None, variant_repeat: int = None,
                      variant_label: str = None, carrier_contig: str = None,
-                     score: dict = None, rs_alert: str = None) -> None:
+                     score: dict = None, rs_alert: str = None,
+                     concentration: dict = None) -> bool:
     """
     Generates a PDF report with, for each haplotype:
       - The contig name
@@ -1412,10 +1450,13 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
             SimpleDocTemplate, Paragraph, Spacer, HRFlowable, KeepTogether
         )
         from reportlab.lib.enums import TA_LEFT, TA_CENTER
-    except ImportError:
-        print("[ERROR] reportlab not available. Install it with: pip install reportlab",
+    except ImportError as e:
+        # Say WHY: reportlab >= 5 refuses Python 3.9 at import time ("requires 3.10+"), so a bare
+        # `pip install reportlab` on a 3.9 server installs a version that can never load (seen 2026-11).
+        print(f"[ERROR] reportlab cannot be imported ({str(e).splitlines()[0]}). Install it with: "
+              f"pip install 'reportlab<5' on Python 3.9, pip install reportlab on Python >= 3.10",
               file=sys.stderr)
-        return
+        return False
 
     # ── Styles ────────────────────────────────────────────────────────────
     COLOR_NORMAL = '#1a1a2e'
@@ -1587,9 +1628,20 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
                                     backColor=colors.HexColor('#fdecea'), borderPad=6,
                                     borderColor=colors.HexColor('#8a1f11'), borderWidth=1)
         story.append(Paragraph("⚠ LENGTH UNRELIABLE — " + length_warning, warn_style))
+    _conc = format_concentration(concentration)
+    if _conc:
+        story.append(Paragraph(_conc, style_meta))
 
     # ── One block per haplotype ─────────────────────────────────────────────
-    story.append(Paragraph("Haplotypes", style_section))
+    # Under the LENGTH UNRELIABLE banner the per-contig consensus is built on reads that do not span the
+    # VNTR, placed on a length-contig without length information. Its motif string is then not a
+    # haplotype: a WGS report showed a lone `58_59delCC` on a NEGATIVE sample (7 non-spanning reads; absent
+    # from the 43-read fromfastq call; caller p_bonf 0.80), and an AS report listed 44/74 against an
+    # arbiter 44/70. The nomenclature is withheld there unless the variant caller itself is POSITIVE.
+    _dupc_res0 = (dupc or {}).get("result", dupc) or {}
+    _hide_nomen = hide_nomenclature(length_warning, _dupc_res0)
+    story.append(Paragraph("Haplotypes" + (" — not interpretable (see warning above)" if _hide_nomen else ""),
+                           style_section))
 
     # The CARRIER haplotype for the report highlight = the one whose reconstructed consensus actually bears
     # the variant at variant_repeat (an indel motif, length != 60). When two haplotypes share a contig (a
@@ -1625,6 +1677,16 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
             f"Haplotype {h['rank']} — <font color='{COLOR_HEADER}'>{h['contig']}</font>",
             style_contig,
         ))
+        if _hide_nomen:
+            block.append(Paragraph(f"{h['read_count']} reads  |  {h['contig_length']} bp reference", style_meta))
+            block.append(Paragraph(
+                "<font color='#777777'><i>Motif nomenclature withheld: this consensus rests on reads that do "
+                "not span the VNTR and cannot be read as a haplotype. Use the arbiter length for the allele "
+                "sizes and the variant caller verdict for the frameshift.</i></font>", style_meta))
+            story.append(KeepTogether(block))
+            story.append(HRFlowable(width='100%', thickness=0.5,
+                                    color=colors.HexColor('#cccccc'), spaceAfter=4))
+            continue
         block.append(Paragraph(
             f"{h['read_count']} reads  |  {h['contig_length']} bp reference  |  "
             f"{h['n_motifs']} motifs identified "
@@ -1660,7 +1722,7 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
 
     # ── Final molecular-result line — only when there is NO clinical-call box above (else the same
     #     genotype would appear twice, in two blue boxes; the top box is the one the reader came for) ──
-    if not clinical_call:
+    if not clinical_call and not _hide_nomen:
         parts_mol = []
         for h in results:
             n = h['n_motifs']
@@ -1747,7 +1809,16 @@ def write_pdf_report(results: list, path: str, sample: str = '', two_axis: dict 
             story.append(Spacer(1, 0.1 * cm))
             story.append(Paragraph(f'<font color="#B8860B"><b>&#9888; {rs_alert}</b></font>', style_meta))
 
+    # Provenance footer — which code produced this report (version + git commit).
+    try:
+        from .provenance import provenance_line as _pl
+        story.append(Spacer(1, 0.3 * cm))
+        story.append(Paragraph(_pl(), ParagraphStyle('prov', fontName='Helvetica', fontSize=7,
+                                                     textColor=colors.HexColor('#777777'))))
+    except Exception:
+        pass
     doc.build(story)
+    return True
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1759,7 +1830,8 @@ def haplotype_string(matched: list) -> str:
     return '-'.join(m['name'] for m in matched)
 
 
-def format_report(results: list, sample: str = '', length_warning: str = None) -> str:
+def format_report(results: list, sample: str = '', length_warning: str = None,
+                  dupc_result: dict = None) -> str:
     """
     Format the full report for all haplotypes.
     `results` is a list of per-haplotype dicts.
@@ -1782,7 +1854,11 @@ def format_report(results: list, sample: str = '', length_warning: str = None) -
             f"({h['read_count']} reads, {h['contig_length']} bp reference)"
         )
         lines.append(f"{'─'*80}")
-        lines.append(f"\n  Nomenclature:\n  {h['nomenclature']}\n")
+        if hide_nomenclature(length_warning, dupc_result):
+            lines.append("\n  Nomenclature: withheld — consensus on non-spanning reads, not interpretable "
+                         "(see LENGTH UNRELIABLE).\n")
+        else:
+            lines.append(f"\n  Nomenclature:\n  {h['nomenclature']}\n")
         lines.append(
             f"  Motifs identified: {h['n_motifs']}  "
             f"(exact: {h['n_exact']}  |  approximate: {h['n_approx']})"
@@ -1792,7 +1868,8 @@ def format_report(results: list, sample: str = '', length_warning: str = None) -
             for b in h['unmatched']:
                 lines.append(f"      pos {b['pos']:>5} : {b['sequence']}")
 
-        lines.append(f"\n  Details:")
+        lines.append("\n  Details:" if not hide_nomenclature(length_warning, dupc_result)
+                     else "\n  Details (expert review only — NOT interpretable as a haplotype):")
         lines.append(
             f"  {'Pos':>6}  {'Len.':>5}  {'Motif':<38}  {'Match':>6}  Sequence"
         )
@@ -2134,6 +2211,9 @@ def main(argv=None):
     _tail = ranked[min(9, len(ranked) - 1)][1]
     _flat = len(ranked) >= 5 and _top_cnt < 1.5 * _tail
     length_warning = None
+    read_conc = read_concentration(read_counts)
+    if read_conc:
+        print("  " + format_concentration(read_conc), file=sys.stderr)
     if _top_cnt < 20 or _flat:
         length_warning = (
             ("top contig supported by < 20 reads. " if _top_cnt < 20 else "")
@@ -2592,7 +2672,8 @@ def main(argv=None):
         print(f"[WARN] congruence check failed: {e}", file=sys.stderr)
 
     # ── 4. Text report ─────────────────────────────────────────────────
-    report = format_report(all_results, sample=args.sample, length_warning=length_warning)
+    report = format_report(all_results, sample=args.sample, length_warning=length_warning,
+                           dupc_result=(dupc_verdict or {}).get("result", dupc_verdict))
     report = (_arbiter_length_block(arbiter_len, rs4072037, dupc_verdict)
               + (CG.render(cong) if cong else "") + _scaffold_block(scaffold) + report)
     if two_axis is not None:
@@ -2613,14 +2694,29 @@ def main(argv=None):
 
     # ── 6. PDF export ────────────────────────────────────────────────────
     if args.pdf:
-        write_pdf_report(all_results, args.pdf, sample=args.sample, two_axis=two_axis,
-                         length_warning=length_warning, arbiter=arbiter_len, rs4072037=rs4072037,
-                         dupc=dupc_verdict, congruence=cong)
-        print(f"[INFO] PDF report written to: {args.pdf}", file=sys.stderr)
+        _pdf_ok = write_pdf_report(all_results, args.pdf, sample=args.sample, two_axis=two_axis,
+                                   length_warning=length_warning, arbiter=arbiter_len,
+                                   rs4072037=rs4072037, dupc=dupc_verdict, congruence=cong,
+                                   concentration=read_conc)
+        # Report success only when the file is really there: the success line used to follow the
+        # "reportlab not available" error unconditionally, so a run without reportlab claimed a PDF.
+        if _pdf_ok and os.path.exists(args.pdf):
+            print(f"[INFO] PDF report written to: {args.pdf}", file=sys.stderr)
+        else:
+            print(f"[ERROR] PDF report NOT written ({args.pdf}). Install reportlab "
+                  f"(pip install reportlab) to get the PDF; the JSON/text outputs are unaffected.",
+                  file=sys.stderr)
 
     # ── 7. JSON export ───────────────────────────────────────────────────
     if args.json:
         payload = {'sample': args.sample, 'haplotypes': list(all_results)}
+        if read_conc:
+            payload['read_concentration'] = read_conc
+        try:
+            from .provenance import provenance as _prov
+            payload['provenance'] = _prov()
+        except Exception:
+            pass
         if length_warning:
             payload['length_warning'] = length_warning   # so a re-render keeps the caveat
         if arbiter_len is not None:

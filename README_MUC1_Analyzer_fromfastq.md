@@ -1,8 +1,8 @@
 # MUC1_Analyzer_fromfastq.py
 
-*Alignment-first MUC1 VNTR caller that runs **directly from a FASTQ** — length of both alleles (including two same-length or one-repeat-apart alleles, separated by SNP phasing), homopolymer **59dupC / frameshift** detection, **native rs4072037 severity**, and the two-axis **MUC1_Score** with cohort positioning, in a single self-contained pass.*
+*Alignment-first MUC1 VNTR caller that runs **directly from a FASTQ** — length of both alleles (including two same-length or one-repeat-apart alleles, separated by SNP phasing), homopolymer **59dupC / frameshift** detection, **native rs4072037** (mutant allele, informational), and the **MUC1_Score** (frameshift tail) with cohort positioning, in a single self-contained pass.*
 
-This tool is a **companion to `MUC1_Analyzer`** (the `muc1_analyzer` package). It reuses that package's validated internals (consensus reconstruction, motif nomenclature, frameshift detection, novel-motif discovery, SNP phasing, rs4072037 genotyping, two-axis clinical score) and adds everything needed to go **from raw adaptive-sampling long reads to a both-allele clinical result without a pre-built, locus-aligned BAM**.
+This tool is a **companion to `MUC1_Analyzer`** (the `muc1_analyzer` package). It reuses that package's validated internals (consensus reconstruction, motif nomenclature, frameshift detection, novel-motif discovery, SNP phasing, rs4072037 genotyping, MUC1_Score) and adds everything needed to go **from raw adaptive-sampling long reads to a both-allele clinical result without a pre-built, locus-aligned BAM**.
 
 > Runs from the repository root (it imports `muc1_analyzer` and `vntr_raw_length`). It lives on the branch **`muc1-analyzer-fromfastq`** (based on `Dev-Muc1-score`, which carries these dependencies).
 
@@ -16,14 +16,14 @@ This tool is a **companion to `MUC1_Analyzer`** (the `muc1_analyzer` package). I
 2. **The homopolymer 59dupC.** ONT miscounts the C-tract, so a consensus/insertion-fraction call at a single position is not simultaneously sensitive and specific at AS depth.
 3. **Reproducibility from a single input.** A full both-allele result required chaining several external tools.
 
-`MUC1_Analyzer_fromfastq.py` takes a **FASTQ (or uBAM/BAM/CRAM — sequences only)** and does the whole thing internally: it measures length **alignment-first against a "ruler"**, fixes the physical length with an **indel-burden scaffold sweep**, recovers reads reliably, calls each allele's consensus/motifs/frameshift, detects the dupC, reads **rs4072037 natively** off the mutant allele, computes the **MUC1_Score**, and emits **merged, both-allele outputs**.
+`MUC1_Analyzer_fromfastq.py` takes a **FASTQ or an unaligned BAM (uBAM)** and does the whole thing internally: it measures length **alignment-first against a "ruler"**, fixes the physical length with an **indel-burden scaffold sweep**, recovers reads reliably, calls each allele's consensus/motifs/frameshift, detects the dupC, reads **rs4072037 natively** off the mutant allele, computes the **MUC1_Score**, and emits **merged, both-allele outputs**.
 
 ---
 
 ## 2. What it does (pipeline)
 
 ```
-FASTQ / uBAM / BAM / CRAM  (sequences only)
+FASTQ / uBAM
         |
         v
 [1] STREAMING length - read one at a time, align each to the RULER
@@ -65,7 +65,7 @@ FASTQ / uBAM / BAM / CRAM  (sequences only)
         --clair3-vcf or --genomic-bam authorities; power-aware verdict
         |
         v
-[8] rs4072037 severity - read NATIVELY off the MUTANT allele's reads
+[8] rs4072037 (informational) - read NATIVELY off the MUTANT allele's reads
         (majority C/T at the constant flank offset; no GRCh38/T2T needed)
         |
         v
@@ -99,7 +99,7 @@ python MUC1_Analyzer_fromfastq.py \
     -t 20
 ```
 
-* `-b` accepts a **FASTQ(.gz)**, uBAM, or any BAM/CRAM (only read *sequences* are used).
+* `-b` accepts a **FASTQ(.gz)** or an unaligned BAM (uBAM). An aligned BAM/CRAM is refused since v1.0.1: extract the MUC1 reads as FASTQ first (`samtools view -b -F 0x904 [-T genome.fa] in.cram chr1:155180000-155200000 | samtools fastq -T MM,ML - > S.MUC1.fq`).
 * **rs4072037 is now detected automatically** off the mutant allele's reads - do **not** pass `--rs4072037` unless you want to override it.
 * `-r` is resolved to an absolute path and indexed once at start-up (clear early error if missing / read-only).
 * The output directory is created automatically. **Quote** paths with spaces or `[]`, e.g. `-o "VNTR_results/[AS]SAMPLE"`.
@@ -110,14 +110,14 @@ python MUC1_Analyzer_fromfastq.py \
 
 | Option | Purpose |
 |---|---|
-| `-b, --bam` *(req.)* | reads: fastq(.gz), uBAM, or any BAM/CRAM (sequences only) |
+| `-b, --bam` *(req.)* | reads: fastq(.gz) or unaligned BAM (uBAM) |
 | `-r, --ref` *(req.)* | faked multi-length reference (`MUC1_VNTR_Nrepeats`) |
 | `-s, --sample` `[sample]` / `-o, --outdir` `[.]` | sample name / output directory |
 | `-t, --threads` `[1]` | threads for the ruler alignment (bottleneck on large AS FASTQs; scales well, e.g. `-t 20`) |
 | `--pacbio` | PacBio HiFi (`map-hifi`; default `map-ont`) |
 | `--ref-cram` | reference FASTA if `--bam` is a CRAM |
 
-**rs4072037 severity (new)**
+**rs4072037 of the mutant allele (informational)**
 
 | Option | Purpose |
 |---|---|
@@ -190,10 +190,10 @@ alleles (HET): [32, 66] copies
 allele 32 -> scaffold 36 ; allele 66 -> scaffold 70
 dupC (run-length shift): CONFIRME - repetition 20 on MUC1_VNTR_70repeats
 rs4072037 (mutant allele): T (C:0 / T:10, depth 10) -> protecteur [detecte]
-MUC1_Score: 36 repeat | 70 repeat (59dupC ~ repeat 20)  onset=1.429 severity=-1.0
+MUC1_Score: 36 repeat | 70 repeat (59dupC ~ repeat 20)  carrier=True frameshift_tail=50 -> severe (rs4072037 T, info only)
 ```
 
-> Note: rs4072037 is read from the mutant allele's reads (here **T -> protective**). Passing `--rs4072037 C` would override to severe **and** print a disagreement alert on the PDF.
+> Note: rs4072037 is read from the mutant allele's reads (here **T**). It is reported for information only and does not change the score. Passing `--rs4072037 C` would override the reported base **and** print a disagreement alert on the PDF.
 
 `cigar.summary.json` (excerpt):
 
@@ -206,8 +206,8 @@ MUC1_Score: 36 repeat | 70 repeat (59dupC ~ repeat 20)  onset=1.429 severity=-1.
                     "variant": {"repeat": 20, "label": "59dupC", "p_bonf": 4.66e-06}},
   "rs4072037_detection": {"base": "T", "C": 0, "T": 10, "depth": 10},
   "rs4072037_used": {"base": "T", "source": "detecte (C:0 / T:10)"},
-  "muc1_two_axis_score": {"mut_len": 70, "healthy_len": 36,
-                          "onset_score": 1.429, "severity_score": -1.0}
+  "muc1_score": {"mut_len": 70, "healthy_len": 36, "fs_tail": 50,
+                 "fs_percentile": 0.823, "fs_category": "severe", "splice_base": "T"}
 }
 ```
 
@@ -223,13 +223,13 @@ MUC1_Score: 36 repeat | 70 repeat (59dupC ~ repeat 20)  onset=1.429 severity=-1.
 * **Run-length-shift dupC.** ONT can't count a homopolymer, so the caller scores the fraction of reads whose C-tract is **>= mut_len** against an **in-sample empirical null**, with a binomial + Bonferroni test - general, self-calibrated, needing no PoN or Clair3.
 * **rs4072037 read natively.** The SNP sits in the constant 5' flank present in every faked contig, so its base is read straight off the mutant allele's reads (majority C/T at a constant offset, gene-strand mapped back to C/T) - **no GRCh38/T2T alignment needed**. On a negative there is no cis allele, so it is read only with `--rs4072037-on-negative`; below ~5 reads it is reported indeterminate rather than defaulted to severe.
 * **Variant repeat number = motif index.** The reported repeat is the 1-based motif index carrying the variant, consistent with the total length count.
-* **MUC1_Score.** Two axes - onset (`onset_index` = fraction of the mutant VNTR downstream of the frameshift = fraction translated as the MUC1fs neoprotein) and severity (rs4072037: C -> +1, T -> -1) - plus a cohort z-score positioning the sample against the n=27 calibration survey.
+* **MUC1_Score.** One axis: the frameshift tail (`mut_len - position`, repeats downstream of the variant on the mutant allele), placed on a Gaussian fitted to the n=33 phenotyped cohort and reported as a percentile and one of four categories. rs4072037 is reported for information and carries no weight.
 
 ---
 
 ## 8. Notes & caveats
 
-* The **rs4072037 severity axis weights and the cohort calibration are provisional** (n=27, LOO rho ~ 0.52) - a direction-of-effect signal, not a validated predictor.
+* The **MUC1_Score calibration** comes from a small phenotyped cohort (n=33): the categories place the sample relative to that cohort, they are not an individual prediction.
 * **Phasing sensitivity**: two SAME-length alleles differing by <= `--min-snp-diff` substitutional SNPs are reported as a single (homozygous) haplotype by design (their dupC, if any, is still detected in the pool but not attributed). Alleles of different length are always separated. Tune `--min-snp-diff` / `--min-phasing-snps` on known cases.
 * **PCR long-read amplicons** are out of scope: stutter/chimeras break the burden sweep (use the dedicated tool for those).
 * The homopolymer caller's **specificity** should still be confirmed on a well-covered true negative.

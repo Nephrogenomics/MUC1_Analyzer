@@ -3,7 +3,7 @@
 
 WHY THIS MODULE EXISTS. On LR-PCR the dispatch is only as good as the two lengths it is told to scaffold on.
 Left to a plain read-mode arbiter, the LONG allele — depleted by preferential PCR dropout — loses to its own
-SHORTER slippage by-products, which are more amplified. Measured on a carrier (truth 77 wt | 82 mut): the modal
+SHORTER slippage by-products, which are more amplified. Measured on MIC-355 (truth 77 wt | 82 mut): the modal
 arbiter returned [44, 77], scaffolded the variant onto the 44 by-products, and reported the carrier at the
 wrong length; feeding [77, 82] instead put the dupC on the 82 contig at frac 0.741 (vs 0.16). So the length
 CHOICE, not the alignment or the scaffold pick, was the failing link — and this module fixes exactly it.
@@ -13,11 +13,11 @@ lengths by a score that is height × local-contrast × a graded length weight f(
 weight is the dropout correction: between two peaks longer than the dominant one (e.g. a real long allele vs
 a slippage plateau), the LONGER survives even at lower depth, because slippage products are always shorter
 than their parent and a long peak reaching that length despite dropout is the more likely true allele. This
-is the same picker validated inside rescaffold on [50,82], [44,106] and [68,77]; here it is a
-standalone so the direct amplicon→dispatch path (no binning, VAF preserved) can call it.
+is the same picker validated inside rescaffold on FER [50,82], CAL-2 [44,106], OUE [68,77]; here it is a
+standalone so the direct muc1-profile→dispatch path (no binning, VAF preserved) can call it.
 
     from allele_lengths import two_alleles
-    lengths = two_alleles("SAMPLE.xavier.bam")            # e.g. [77, 82]
+    lengths = two_alleles("SAMPLE.vntr.bam")            # e.g. [77, 82]
     dispatch_dupc_vntr(bam, ref, lengths=lengths, variant_probe="dupC")
 """
 from collections import Counter
@@ -38,7 +38,7 @@ ARTEFACT_MALUS = 0.9
 
 def load_reads(bam):
     """{name: seq} primary reads only, each once. Input alignment ignored — only the sequence is used, so a
-    vntr BAM, a xavier BAM, a uBAM or a CRAM all work identically."""
+    vntr BAM, a muc1-profile BAM, a uBAM or a CRAM all work identically."""
     reads = {}
     mode = "rc" if str(bam).endswith(".cram") else "rb"
     with pysam.AlignmentFile(bam, mode, check_sq=False) as af:
@@ -64,10 +64,10 @@ def _peaks(hist, *, min_reads=DEFAULT_MIN_READS, sep=5, nbr_frac=0.40):
     LONG allele that a smoothing/fractional arbiter drops.
 
     A plain local-maximum test (n ≥ both immediate neighbours) STRUCTURALLY loses one of two true alleles
-    one copy apart: the slightly smaller one sits on the taller's slope and is never a candidate (a
-    43|44 pair: 620 vs 623 reads — the 620-read allele is dropped for a 3-read difference). So a length also
+    one copy apart: the slightly smaller one sits on the taller's slope and is never a candidate (CHA
+    43|44: 620 vs 623 reads — the 620-read allele is dropped for a 3-read difference). So a length also
     qualifies if it is a SUBSTANTIAL Δ1 neighbour — ≥ nbr_frac of its taller immediate neighbour AND ≥
-    min_reads — which admits a real adjacent allele (620/623 = 99 %; 129/148 = 87 %) while still
+    min_reads — which admits a real adjacent allele (620/623 = 99 %; KCH 129/148 = 87 %) while still
     rejecting a slippage shoulder (a few % of its parent). Whether two kept Δ1 peaks are truly two alleles
     is decided downstream (consensus / divergent-dupC arbitration), not here."""
     if not hist:
@@ -107,19 +107,19 @@ def pick_two(lengths, *, sep=DEFAULT_SEP, min_reads=DEFAULT_MIN_READS, min_secon
     allele depleted by long-allele dropout — and penalises a peak SHORTER than it — a slippage by-product,
     always shorter than its parent). The two highest-scoring peaks are the alleles. We do NOT assume the
     most-abundant peak is a real allele: on a carrier whose long mutant allele slippage-decays, the MOST
-    abundant peak can be the by-product pile (peak 44 is slippage of the 82 mutant; the true
+    abundant peak can be the by-product pile (MIC-355: peak 44 is slippage of the 82 mutant; the true
     alleles are 77 and 82, neither of them the mode). Scoring all peaks and taking the top two avoids
     anchoring on a spurious dominant.
 
     Returns (alleles, detail). One peak → single length (homozygous / same-length is the SNP-phasing case).
 
     KNOWN LIMIT (length alone cannot fix it). When the MOST abundant peak is itself a slippage pile of a
-    long mutant allele (peak 44, n=180, is by-product of the 82 mutant; true alleles 77 & 82), it
+    long mutant allele (MIC-355: peak 44, n=180, is by-product of the 82 mutant; true alleles 77 & 82), it
     is taller AND sharper than the real alleles, so no length-shape score demotes it — it wrongly takes an
     allele slot, and the depleted 82 loses the second slot to 77. Distinguishing "44 = by-product of 82"
     from "44 = a real short allele" is a SEQUENCE question (the 44 reads carry the 82 haplotype), not a
     length one. That is the step-B SNP-phasing case; this picker returns [44, 77] there and is not expected
-    to be right. It IS right when the dominant peak is a true allele (all three cases above pass)."""
+    to be right. It IS right when the dominant peak is a true allele (FER, CAL-2, OUE all pass)."""
     hist = Counter(lengths)
     pk = _peaks(hist, min_reads=min_reads, sep=sep)
     if not pk:
@@ -144,13 +144,13 @@ def pick_two(lengths, *, sep=DEFAULT_SEP, min_reads=DEFAULT_MIN_READS, min_secon
             break
     # GUARD: a second peak is a real allele only if it is a SHARP peak, not a bump in the slippage/chimera
     # tail a big allele drags behind it. Use CONTRAST (height / local neighbourhood), NOT read fraction:
-    # dropout leaves a real long allele legitimately low in READS (106@50 vs 44@1509 = 3 %; and
+    # dropout leaves a real long allele legitimately low in READS (CAL-2: 106@50 vs 44@1509 = 3 %; FER:
     # 82@12 vs 50@218 = 5 %), so a read-fraction floor would reject exactly those true long alleles. But a
-    # real allele — however depleted — is a SHARP spike (106 contrast 21, 82 contrast 12, and
-    # 82 contrast ~7), whereas a tail bump is flat (29 contrast 1.9, 32 contrast 1.8). A contrast
+    # real allele — however depleted — is a SHARP spike (CAL-2 106 contrast 21, FER 82 contrast 12, MIC-355
+    # 82 contrast ~7), whereas a tail bump is flat (GAU 29 contrast 1.9, CHU 32 contrast 1.8). A contrast
     # floor keeps depleted long alleles and rejects the noise tail — the discrimination read fraction can't
-    # make. This applies at ALL Δ: a slippage/chimera bump can sit several copies from its parent (29 vs
-    # 44 = Δ15, and 32 vs 44 = Δ12), so the guard MUST NOT be restricted to Δ≤1.
+    # make. This applies at ALL Δ: a slippage/chimera bump can sit several copies from its parent (GAU 29 vs
+    # 44 = Δ15, CHU 32 vs 44 = Δ12), so the guard MUST NOT be restricted to Δ≤1.
     if len(chosen) == 2:
         second_contrast = min(chosen[0][2], chosen[1][2])
         if second_contrast < min_second_contrast:
@@ -166,14 +166,14 @@ def two_alleles(bam, ref=None, *, offset=DEFAULT_OFFSET, maxmm=DEFAULT_MAXMM,
                 min_diff=3, nbr_frac=0.40, dupc_div=0.40, outdir=None, return_detail=False):
     """The two allele lengths to hand the dispatch, straight from a BAM.
 
-    With sep=1, pick_two no longer fuses alleles that differ by ≥2 copies, so a close true pair (77|80,
-    76|78) is kept. Two candidate lengths are then resolved by their gap Δ:
+    With sep=1, pick_two no longer fuses alleles that differ by ≥2 copies, so a close true pair (DE 77|80,
+    COU 76|78) is kept. Two candidate lengths are then resolved by their gap Δ:
       · Δ ≥ 2  → two distinct alleles (a single allele's flank-length does not scatter by 2);
       · Δ ≤ 1  → ambiguous — compare the two groups' CONSENSUS at the base level (consensus_arbiter):
                  ≥ min_diff substitutions ⇒ two alleles; else ⇒ one allele (homozygous / measurement
                  scatter). Needs `ref`; if ref is None the pair is kept as-is (prudent, no silent merge).
     When pick_two returns a SINGLE allele, a Δ1 neighbour carrying ≥ nbr_frac of its reads AND a dupC
-    fraction diverging by ≥ dupc_div is rescued as a second allele (the 43|44 case, invisible to the
+    fraction diverging by ≥ dupc_div is rescued as a second allele (the KCH 43|44 case, invisible to the
     local-maximum peak test — see below).
     Returns [] if nothing spans; [L] for a single length; [L1,L2] for two. `return_detail=True` adds the trace."""
     reads_qual = load_reads(bam)                       # {name: (seq, qual)} or {name: seq}
@@ -216,13 +216,13 @@ def two_alleles(bam, ref=None, *, offset=DEFAULT_OFFSET, maxmm=DEFAULT_MAXMM,
         else:
             detail["arbitration"] = f"Δ={delta} ≤ 1 but no ref given → kept both (prudent, no silent merge)"
     # Neighbour rescue by DIVERGENT frameshift fraction. The local-maximum test in _peaks needs a length to
-    # dominate BOTH immediate neighbours, so a true second allele a few copies from a taller one (43|44:
-    # 148 vs 129; 76|78: the 78 carrier rejected on contrast 2.96<3.0) can be structurally invisible or
+    # dominate BOTH immediate neighbours, so a true second allele a few copies from a taller one (KCH 43|44:
+    # 148 vs 129; COU 76|78: the 78 carrier rejected on contrast 2.96<3.0) can be structurally invisible or
     # rejected as a "tail bump". So, when a SINGLE allele L was returned, we look at each neighbour L±1..±3
     # that carries ≥ nbr_frac of L's reads, and ask the FUNCTIONAL question the height/contrast test cannot:
     # do the two length-groups carry the frameshift at very different rates? A slippage shoulder has the SAME
-    # dupC fraction as its parent (same DNA, mis-replicated); a true carrier allele diverges sharply (
-    # 0.00 vs 0.76; 76 0.115 vs 78 0.763). |Δfrac| ≥ dupc_div ⇒ two alleles. Extended to Δ≤3 (the 76|78 case is Δ2)
+    # dupC fraction as its parent (same DNA, mis-replicated); a true carrier allele diverges sharply (KCH
+    # 0.00 vs 0.76; COU 76 0.115 vs 78 0.763). |Δfrac| ≥ dupc_div ⇒ two alleles. Extended to Δ≤3 (COU is Δ2)
     # with a STRICTER divergence floor (0.40 vs the 0.30 that was used for Δ1) because the further apart the
     # lengths, the stronger the functional signal we require to justify splitting. Population floor (≥40 % of
     # the dominant peak) applies at every Δ. This can only ADD a second allele when a real frameshift signal
